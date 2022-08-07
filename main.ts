@@ -2,6 +2,11 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Food, function (sprite, othe
     otherSprite.destroy()
     sprite.destroy()
     info.changeScoreBy(10)
+    timer.background(function () {
+        timer.after(500, function () {
+            statusbar.value += 1
+        })
+    })
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (!(controller.up.isPressed()) && (!(controller.down.isPressed()) && !(controller.right.isPressed()))) {
@@ -10,8 +15,13 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         mySprite2 = sprites.create(assets.image`laser1`, SpriteKind.Projectile)
         mySprite2.setVelocity(-1 * laserV, 0)
         mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
-        statusbar.value += -0.1
+        statusbar.value += statusBarPct
         music.pewPew.play()
+        timer.background(function () {
+            timer.after(500, function () {
+                statusbar.value += 0.5
+            })
+        })
     }
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function (sprite, otherSprite) {
@@ -22,6 +32,11 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function (sprite, oth
     bCreated2 = 0
     bCreated3 = 0
     bCreated4 = 0
+    timer.background(function () {
+        timer.after(500, function () {
+            statusbar.value += 1
+        })
+    })
 })
 sprites.onOverlap(SpriteKind.Food, SpriteKind.Player, function (sprite, otherSprite) {
     sprite.destroy()
@@ -30,6 +45,7 @@ sprites.onOverlap(SpriteKind.Food, SpriteKind.Player, function (sprite, otherSpr
 statusbars.onZero(StatusBarKind.Health, function (status) {
     info.changeLifeBy(-1)
     killCtr = levelCtr * 5
+    statusbar.value = 0
     goNextLevel()
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -39,8 +55,13 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         mySprite2 = sprites.create(assets.image`laser1`, SpriteKind.Projectile)
         mySprite2.setVelocity(laserV, 0)
         mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
-        statusbar.value += -0.1
+        statusbar.value += statusBarPct
         music.pewPew.play()
+        timer.background(function () {
+            timer.after(500, function () {
+                statusbar.value += 0.5
+            })
+        })
     }
 })
 controller.up.onEvent(ControllerButtonEvent.Released, function () {
@@ -50,8 +71,13 @@ controller.up.onEvent(ControllerButtonEvent.Released, function () {
         mySprite2 = sprites.create(assets.image`laser0`, SpriteKind.Projectile)
         mySprite2.setVelocity(0, -1 * laserV)
         mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
-        statusbar.value += -0.1
+        statusbar.value += statusBarPct
         music.pewPew.play()
+        timer.background(function () {
+            timer.after(500, function () {
+                statusbar.value += 0.5
+            })
+        })
     }
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -61,8 +87,13 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         mySprite2 = sprites.create(assets.image`laser0`, SpriteKind.Projectile)
         mySprite2.setVelocity(0, laserV)
         mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
-        statusbar.value += -0.1
+        statusbar.value += statusBarPct
         music.pewPew.play()
+        timer.background(function () {
+            timer.after(500, function () {
+                statusbar.value += 0.5
+            })
+        })
     }
 })
 controller.A.onEvent(ControllerButtonEvent.Repeated, function () {
@@ -81,6 +112,9 @@ function goNextLevel () {
             curLevel += 1
             game.splash("Next Wave! Level:", curLevel)
             levelCtr += 1
+            createPct += createPct * 10
+            pulsePct += pulsePct * 10
+            gameTimer += -100
             info.changeLifeBy(1)
         } else {
             statusbar.value = 100
@@ -109,6 +143,9 @@ let bCreated3 = 0
 let bCreated2 = 0
 let bCreated = 0
 let mySprite2: Sprite = null
+let statusBarPct = 0
+let createPct = 0
+let pulsePct = 0
 let curLevel = 0
 let levelCtr = 0
 let killCtr = 0
@@ -121,15 +158,16 @@ statusbar = statusbars.create(60, 4, StatusBarKind.Health)
 statusbar.positionDirection(CollisionDirection.Top)
 statusbar.max = 100
 mySprite = sprites.create(assets.image`Cyclone`, SpriteKind.Player)
-info.setLife(3)
+info.setLife(15)
 laserV = 300
 let pulseV = 150
 killCtr = 0
 levelCtr = 1
 curLevel = 1
-let pulsePct = 0.0001
-let createPct = 0.0001
+pulsePct = 1e-20
+createPct = 1e-20
 let gameTimer = 10000
+statusBarPct += -3
 game.onUpdateInterval(gameTimer, function () {
     if (bShot) {
         timer.after(2000, function () {
@@ -153,6 +191,11 @@ game.onUpdateInterval(gameTimer, function () {
     }
 })
 forever(function () {
+    if (levelCtr == curLevel) {
+        goNextLevel()
+    }
+})
+forever(function () {
     if (Math.percentChance(createPct) && !(bCreated4)) {
         mySprite6 = sprites.create(assets.image`Enemy2`, SpriteKind.Enemy)
         mySprite6.setPosition(80, 88)
@@ -165,8 +208,6 @@ forever(function () {
         mySprite3.setFlag(SpriteFlag.AutoDestroy, true)
         bShot4 = 1
     }
-})
-forever(function () {
     if (Math.percentChance(createPct) && !(bCreated3)) {
         mySprite5 = sprites.create(assets.image`Enemy1`, SpriteKind.Enemy)
         mySprite5.setPosition(128, 60)
@@ -179,8 +220,6 @@ forever(function () {
         mySprite3.setFlag(SpriteFlag.AutoDestroy, true)
         bShot3 = 1
     }
-})
-forever(function () {
     if (Math.percentChance(createPct) && !(bCreated)) {
         mySprite3 = sprites.create(assets.image`Enemy`, SpriteKind.Enemy)
         mySprite3.setPosition(32, 60)
@@ -193,8 +232,6 @@ forever(function () {
         mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
         bShot = 1
     }
-})
-forever(function () {
     if (Math.percentChance(createPct) && !(bCreated2)) {
         mySprite4 = sprites.create(assets.image`Enemy0`, SpriteKind.Enemy)
         mySprite4.setPosition(80, 32)
@@ -206,10 +243,5 @@ forever(function () {
         mySprite3.setVelocity(0, pulseV)
         mySprite3.setFlag(SpriteFlag.AutoDestroy, true)
         bShot2 = 1
-    }
-})
-forever(function () {
-    if (levelCtr == curLevel) {
-        goNextLevel()
     }
 })
