@@ -134,8 +134,10 @@ function goNextLevel () {
     if (killCtr >= levelCtr * 5) {
         killCtr = 0
         sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+        sprites.destroyAllSpritesOfKind(SpriteKind.CircleEnemy)
         sprites.destroyAllSpritesOfKind(SpriteKind.Food)
         sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
+        sprites.destroyAllSpritesOfKind(SpriteKind.heroProjectile)
         sprites.destroyAllSpritesOfKind(SpriteKind.Player)
         mySprite = sprites.create(assets.image`Cyclone`, SpriteKind.Player)
         if (statusbar.value != 0) {
@@ -158,6 +160,7 @@ function goNextLevel () {
         bCreated2 = 0
         bCreated3 = 0
         bCreated4 = 0
+        bCircleCreated = 0
         bShot = 0
         bShot2 = 0
         bShot3 = 0
@@ -360,35 +363,37 @@ game.onUpdateInterval(500, function () {
             bCircleCreated = 1
         } else {
             if (bCircleCreated) {
-                if (newSprite.y > scene.screenHeight() / 2) {
-                    vy = -50
-                } else {
-                    vy = 50
+                if (Math.percentChance(20)) {
+                    if (newSprite.y > scene.screenHeight() / 2) {
+                        vy = -50
+                    } else {
+                        vy = 50
+                    }
+                    if (newSprite.x > scene.screenWidth() / 2) {
+                        vx = -50
+                    } else {
+                        vx = 50
+                    }
+                    projectile = sprites.createProjectileFromSprite(img`
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . 3 3 . . . . . . . 
+                        . . . . . . . 3 3 . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        . . . . . . . . . . . . . . . . 
+                        `, newSprite, vx, vy)
+                    projectile.follow(mySprite, 100)
                 }
-                if (newSprite.x > scene.screenWidth() / 2) {
-                    vx = -50
-                } else {
-                    vx = 50
-                }
-                projectile = sprites.createProjectileFromSprite(img`
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . 3 3 . . . . . . . 
-                    . . . . . . . 3 3 . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    `, newSprite, vx, vy)
-                projectile.follow(mySprite, 100)
             }
         }
     }
