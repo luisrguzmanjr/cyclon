@@ -7,11 +7,7 @@ sprites.onOverlap(SpriteKind.heroProjectile, SpriteKind.Food, function (sprite, 
     otherSprite.destroy()
     sprite.destroy()
     info.changeScoreBy(10)
-    timer.background(function () {
-        timer.after(500, function () {
-            statusbar.value += 1
-        })
-    })
+    statusbar.value += 1
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     armorSprite = sprites.create(assets.image`Armor`, SpriteKind.Armor)
@@ -32,11 +28,6 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
         statusbar.value += statusBarPct
         music.pewPew.play()
-        timer.background(function () {
-            timer.after(500, function () {
-                statusbar.value += 0.5
-            })
-        })
     }
 })
 sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.heroProjectile, function (sprite, otherSprite) {
@@ -44,11 +35,7 @@ sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.heroProjectile, function (s
     info.changeScoreBy(100)
     killCtr += 1
     bCircleCreated = 0
-    timer.background(function () {
-        timer.after(500, function () {
-            statusbar.value += 1
-        })
-    })
+    statusbar.value += 1
 })
 sprites.onOverlap(SpriteKind.Food, SpriteKind.Player, function (sprite, otherSprite) {
     sprite.destroy()
@@ -58,10 +45,9 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Armor, function (sprite, oth
     sprite.destroy()
 })
 controller.B.onEvent(ControllerButtonEvent.Repeated, function () {
-    statusbar.value += -0.5
+    statusbar.value += statusBarPct
 })
 statusbars.onZero(StatusBarKind.Health, function (status) {
-    info.changeLifeBy(-1)
     killCtr = levelCtr * 5
     statusbar.value = 0
     goNextLevel()
@@ -78,11 +64,6 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
         statusbar.value += statusBarPct
         music.pewPew.play()
-        timer.background(function () {
-            timer.after(500, function () {
-                statusbar.value += 0.5
-            })
-        })
     }
 })
 controller.up.onEvent(ControllerButtonEvent.Released, function () {
@@ -97,11 +78,6 @@ controller.up.onEvent(ControllerButtonEvent.Released, function () {
         mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
         statusbar.value += statusBarPct
         music.pewPew.play()
-        timer.background(function () {
-            timer.after(500, function () {
-                statusbar.value += 0.5
-            })
-        })
     }
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.heroProjectile, function (sprite, otherSprite) {
@@ -112,11 +88,7 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.heroProjectile, function (sprite,
     bCreated2 = 0
     bCreated3 = 0
     bCreated4 = 0
-    timer.background(function () {
-        timer.after(500, function () {
-            statusbar.value += 1
-        })
-    })
+    statusbar.value += 1
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     if (!(controller.up.isPressed()) && (!(controller.right.isPressed()) && !(controller.left.isPressed()))) {
@@ -130,11 +102,6 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
         statusbar.value += statusBarPct
         music.pewPew.play()
-        timer.background(function () {
-            timer.after(500, function () {
-                statusbar.value += 0.5
-            })
-        })
     }
 })
 controller.B.onEvent(ControllerButtonEvent.Released, function () {
@@ -160,7 +127,7 @@ function goNextLevel () {
             pulsePct += pulsePct * 10
             gameTimer += -100
             info.changeLifeBy(1)
-            if (curLevel >= 1) {
+            if (curLevel >= 5) {
                 bCircle = 1
             }
         } else {
@@ -182,10 +149,10 @@ function circleEnemy () {
     newSprite = sprites.create(assets.image`circleEnemy`, SpriteKind.CircleEnemy)
     cubicbird.circleSpriteAt(
     newSprite,
-    80,
-    60,
-    30,
-    30
+    randint(65, 95),
+    randint(55, 85),
+    40,
+    35
     )
     vx = 0
     vy = 0
@@ -194,12 +161,8 @@ function circleEnemy () {
 sprites.onOverlap(SpriteKind.heroProjectile, SpriteKind.Projectile, function (sprite, otherSprite) {
     otherSprite.destroy()
     sprite.destroy()
-    info.changeScoreBy(10)
-    timer.background(function () {
-        timer.after(500, function () {
-            statusbar.value += 1
-        })
-    })
+    info.changeScoreBy(50)
+    statusbar.value += 1
 })
 let mySprite4: Sprite = null
 let mySprite5: Sprite = null
@@ -247,7 +210,7 @@ curLevel = 1
 pulsePct = 1e-20
 createPct = 1e-20
 let gameTimer = 10000
-statusBarPct += -3
+statusBarPct += -1
 game.onUpdateInterval(gameTimer, function () {
     if (bShot) {
         timer.after(2000, function () {
