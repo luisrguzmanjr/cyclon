@@ -2,12 +2,27 @@ namespace SpriteKind {
     export const CircleEnemy = SpriteKind.create()
     export const heroProjectile = SpriteKind.create()
     export const Armor = SpriteKind.create()
+    export const Weapon = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.heroProjectile, SpriteKind.Food, function (sprite, otherSprite) {
     otherSprite.destroy()
     sprite.destroy()
     info.changeScoreBy(10)
     statusbar.value += 1
+})
+controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (!(controller.down.isPressed()) && (!(controller.right.isPressed()) && !(controller.left.isPressed()))) {
+        sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
+        mySprite = sprites.create(assets.image`Cyclone0`, SpriteKind.Weapon)
+        if (bCircle) {
+            projectile.follow(mySprite)
+        }
+        mySprite2 = sprites.create(assets.image`laser0`, SpriteKind.heroProjectile)
+        mySprite2.setVelocity(0, -1 * laserV)
+        mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
+        statusbar.value += statusBarPct
+        music.pewPew.play()
+    }
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     armorSprite = sprites.create(assets.image`Armor`, SpriteKind.Armor)
@@ -18,8 +33,8 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Player, function (sprite, ot
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (!(controller.up.isPressed()) && (!(controller.down.isPressed()) && !(controller.right.isPressed()))) {
-        mySprite.destroy()
-        mySprite = sprites.create(assets.image`Cyclone3`, SpriteKind.Player)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
+        mySprite = sprites.create(assets.image`Cyclone3`, SpriteKind.Weapon)
         if (bCircle) {
             projectile.follow(mySprite)
         }
@@ -38,6 +53,19 @@ sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.heroProjectile, function (s
     statusbar.value += 1
 })
 sprites.onOverlap(SpriteKind.Food, SpriteKind.Player, function (sprite, otherSprite) {
+    console.logValue("y", sprite.y)
+    if (sprite.x >= 72 && sprite.x < 80) {
+        mySprite = sprites.create(assets.image`Cyclone4`, SpriteKind.Player)
+    }
+    if (sprite.x >= 86 && sprite.x < 90) {
+        mySprite = sprites.create(assets.image`Cyclone5`, SpriteKind.Player)
+    }
+    if (sprite.y >= 51 && sprite.y < 60) {
+        mySprite = sprites.create(assets.image`Cyclone6`, SpriteKind.Player)
+    }
+    if (sprite.y >= 66 && sprite.y < 70) {
+        mySprite = sprites.create(assets.image`Cyclone7`, SpriteKind.Player)
+    }
     sprite.destroy()
     info.changeLifeBy(-1)
 })
@@ -54,27 +82,13 @@ statusbars.onZero(StatusBarKind.Health, function (status) {
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (!(controller.up.isPressed()) && (!(controller.down.isPressed()) && !(controller.left.isPressed()))) {
-        mySprite.destroy()
-        mySprite = sprites.create(assets.image`Cyclone1`, SpriteKind.Player)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
+        mySprite = sprites.create(assets.image`Cyclone1`, SpriteKind.Weapon)
         if (bCircle) {
             projectile.follow(mySprite)
         }
         mySprite2 = sprites.create(assets.image`laser1`, SpriteKind.heroProjectile)
         mySprite2.setVelocity(laserV, 0)
-        mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
-        statusbar.value += statusBarPct
-        music.pewPew.play()
-    }
-})
-controller.up.onEvent(ControllerButtonEvent.Released, function () {
-    if (!(controller.down.isPressed()) && (!(controller.right.isPressed()) && !(controller.left.isPressed()))) {
-        mySprite.destroy()
-        mySprite = sprites.create(assets.image`Cyclone0`, SpriteKind.Player)
-        if (bCircle) {
-            projectile.follow(mySprite)
-        }
-        mySprite2 = sprites.create(assets.image`laser0`, SpriteKind.heroProjectile)
-        mySprite2.setVelocity(0, -1 * laserV)
         mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
         statusbar.value += statusBarPct
         music.pewPew.play()
@@ -92,8 +106,8 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.heroProjectile, function (sprite,
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     if (!(controller.up.isPressed()) && (!(controller.right.isPressed()) && !(controller.left.isPressed()))) {
-        mySprite.destroy()
-        mySprite = sprites.create(assets.image`Cyclone2`, SpriteKind.Player)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
+        mySprite = sprites.create(assets.image`Cyclone2`, SpriteKind.Weapon)
         if (bCircle) {
             projectile.follow(mySprite)
         }
@@ -179,8 +193,8 @@ let bCreated3 = 0
 let bCreated2 = 0
 let bCreated = 0
 let bCircleCreated = 0
-let mySprite2: Sprite = null
 let armorSprite: Sprite = null
+let mySprite2: Sprite = null
 let statusBarPct = 0
 let createPct = 0
 let pulsePct = 0
