@@ -4,22 +4,37 @@ namespace SpriteKind {
     export const Armor = SpriteKind.create()
     export const Weapon = SpriteKind.create()
 }
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Armor, function (sprite, otherSprite) {
+sprites.onOverlap(SpriteKind.heroProjectile, SpriteKind.Food, function (sprite, otherSprite) {
+    otherSprite.destroy()
     sprite.destroy()
-})
-controller.B.onEvent(ControllerButtonEvent.Repeated, function () {
-    statusbar.value += statusBarPct
+    info.changeScoreBy(10)
+    statusbar.value += 1
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (!(controller.down.isPressed()) && (!(controller.right.isPressed()) && !(controller.left.isPressed()))) {
         sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
-        mySprite = sprites.create(assets.image`Cyclone0`, SpriteKind.Weapon)
-        if (bCircle) {
-            projectile.follow(mySprite)
-        }
+        mySprite3 = sprites.create(assets.image`Cyclone0`, SpriteKind.Weapon)
         mySprite2 = sprites.create(assets.image`laser0`, SpriteKind.heroProjectile)
         mySprite2.setVelocity(0, -1 * laserV)
-        mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
+        mySprite2.setFlag(SpriteFlag.DestroyOnWall, true)
+        statusbar.value += statusBarPct
+        music.pewPew.play()
+    }
+})
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    armorSprite = sprites.create(assets.image`Armor`, SpriteKind.Armor)
+})
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Player, function (sprite, otherSprite) {
+    // sprite.destroy(effects.fire, 500)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
+})
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (!(controller.up.isPressed()) && (!(controller.down.isPressed()) && !(controller.right.isPressed()))) {
+        sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
+        mySprite3 = sprites.create(assets.image`Cyclone3`, SpriteKind.Weapon)
+        mySprite2 = sprites.create(assets.image`laser1`, SpriteKind.heroProjectile)
+        mySprite2.setVelocity(-1 * laserV, 0)
+        mySprite2.setFlag(SpriteFlag.DestroyOnWall, true)
         statusbar.value += statusBarPct
         music.pewPew.play()
     }
@@ -31,6 +46,75 @@ sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.heroProjectile, function (s
     bCircleCreated = 0
     statusbar.value += 1
 })
+sprites.onOverlap(SpriteKind.Food, SpriteKind.Player, function (sprite, otherSprite) {
+    if (sprite.x >= 70 && sprite.x < 80) {
+        // info.changeLifeBy(-1)
+        // resetLevel()
+        if (bLeftHit) {
+        	
+        } else {
+            bLeftHit = 1
+            mySprite = sprites.create(assets.image`Cyclone4`, SpriteKind.Player)
+        }
+    }
+    if (sprite.x >= 85 && sprite.x < 90) {
+        // info.changeLifeBy(-1)
+        // resetLevel()
+        if (bRightHit) {
+        	
+        } else {
+            bRightHit = 1
+            mySprite = sprites.create(assets.image`Cyclone5`, SpriteKind.Player)
+        }
+    }
+    if (sprite.y >= 50 && sprite.y < 60) {
+        // info.changeLifeBy(-1)
+        // resetLevel()
+        if (bTopHit) {
+        	
+        } else {
+            bTopHit = 1
+            mySprite = sprites.create(assets.image`Cyclone6`, SpriteKind.Player)
+        }
+    }
+    if (sprite.y >= 65 && sprite.y < 70) {
+        // info.changeLifeBy(-1)
+        // resetLevel()
+        if (bBottomHit) {
+        	
+        } else {
+            bBottomHit = 1
+            mySprite = sprites.create(assets.image`Cyclone7`, SpriteKind.Player)
+        }
+    }
+    sprite.destroy()
+})
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Armor, function (sprite, otherSprite) {
+    sprite.destroy(effects.spray, 500)
+})
+function resetLevel () {
+    killCtr = levelCtr * 5
+    statusbar.value = 0
+    goNextLevel()
+}
+// statusbar.value += statusBarPct
+controller.B.onEvent(ControllerButtonEvent.Repeated, function () {
+	
+})
+statusbars.onZero(StatusBarKind.Health, function (status) {
+    resetLevel()
+})
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (!(controller.up.isPressed()) && (!(controller.down.isPressed()) && !(controller.left.isPressed()))) {
+        sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
+        mySprite3 = sprites.create(assets.image`Cyclone1`, SpriteKind.Weapon)
+        mySprite2 = sprites.create(assets.image`laser1`, SpriteKind.heroProjectile)
+        mySprite2.setVelocity(laserV, 0)
+        mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
+        statusbar.value += statusBarPct
+        music.pewPew.play()
+    }
+})
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.heroProjectile, function (sprite, otherSprite) {
     sprite.destroy()
     info.changeScoreBy(50)
@@ -41,103 +125,19 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.heroProjectile, function (sprite,
     bCreated4 = 0
     statusbar.value += 1
 })
+controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (!(controller.up.isPressed()) && (!(controller.right.isPressed()) && !(controller.left.isPressed()))) {
+        sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
+        mySprite3 = sprites.create(assets.image`Cyclone2`, SpriteKind.Weapon)
+        mySprite2 = sprites.create(assets.image`laser0`, SpriteKind.heroProjectile)
+        mySprite2.setVelocity(0, laserV)
+        mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
+        statusbar.value += statusBarPct
+        music.pewPew.play()
+    }
+})
 controller.B.onEvent(ControllerButtonEvent.Released, function () {
     sprites.destroyAllSpritesOfKind(SpriteKind.Armor)
-})
-sprites.onOverlap(SpriteKind.heroProjectile, SpriteKind.Food, function (sprite, otherSprite) {
-    otherSprite.destroy()
-    sprite.destroy()
-    info.changeScoreBy(10)
-    statusbar.value += 1
-})
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Player, function (sprite, otherSprite) {
-    sprite.destroy()
-    info.changeLifeBy(-1)
-})
-sprites.onOverlap(SpriteKind.heroProjectile, SpriteKind.Projectile, function (sprite, otherSprite) {
-    otherSprite.destroy()
-    sprite.destroy()
-    info.changeScoreBy(50)
-    statusbar.value += 1
-})
-function resetLevel () {
-    killCtr = levelCtr * 5
-    statusbar.value = 0
-    goNextLevel()
-}
-statusbars.onZero(StatusBarKind.Health, function (status) {
-    resetLevel()
-})
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    armorSprite = sprites.create(assets.image`Armor`, SpriteKind.Armor)
-})
-controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!(controller.up.isPressed()) && (!(controller.down.isPressed()) && !(controller.right.isPressed()))) {
-        sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
-        mySprite = sprites.create(assets.image`Cyclone3`, SpriteKind.Weapon)
-        if (bCircle) {
-            projectile.follow(mySprite)
-        }
-        mySprite2 = sprites.create(assets.image`laser1`, SpriteKind.heroProjectile)
-        mySprite2.setVelocity(-1 * laserV, 0)
-        mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
-        statusbar.value += statusBarPct
-        music.pewPew.play()
-    }
-})
-sprites.onOverlap(SpriteKind.Food, SpriteKind.Player, function (sprite, otherSprite) {
-    console.logValue("y", sprite.y)
-    if (sprite.x >= 70 && sprite.x < 80) {
-        if (bLeftHit) {
-            info.changeLifeBy(-1)
-            resetLevel()
-        } else {
-            bLeftHit = 1
-            mySprite = sprites.create(assets.image`Cyclone4`, SpriteKind.Player)
-        }
-    }
-    if (sprite.x >= 85 && sprite.x < 90) {
-        if (bRightHit) {
-            info.changeLifeBy(-1)
-            resetLevel()
-        } else {
-            bRightHit = 1
-            mySprite = sprites.create(assets.image`Cyclone5`, SpriteKind.Player)
-        }
-    }
-    if (sprite.y >= 50 && sprite.y < 60) {
-        if (bTopHit) {
-            info.changeLifeBy(-1)
-            resetLevel()
-        } else {
-            bTopHit = 1
-            mySprite = sprites.create(assets.image`Cyclone6`, SpriteKind.Player)
-        }
-    }
-    if (sprite.y >= 65 && sprite.y < 70) {
-        if (bBottomHit) {
-            info.changeLifeBy(-1)
-            resetLevel()
-        } else {
-            bBottomHit = 1
-            mySprite = sprites.create(assets.image`Cyclone7`, SpriteKind.Player)
-        }
-    }
-    sprite.destroy()
-})
-controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!(controller.up.isPressed()) && (!(controller.down.isPressed()) && !(controller.left.isPressed()))) {
-        sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
-        mySprite = sprites.create(assets.image`Cyclone1`, SpriteKind.Weapon)
-        if (bCircle) {
-            projectile.follow(mySprite)
-        }
-        mySprite2 = sprites.create(assets.image`laser1`, SpriteKind.heroProjectile)
-        mySprite2.setVelocity(laserV, 0)
-        mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
-        statusbar.value += statusBarPct
-        music.pewPew.play()
-    }
 })
 function goNextLevel () {
     if (killCtr >= levelCtr * 5) {
@@ -149,6 +149,7 @@ function goNextLevel () {
         sprites.destroyAllSpritesOfKind(SpriteKind.heroProjectile)
         sprites.destroyAllSpritesOfKind(SpriteKind.Player)
         sprites.destroyAllSpritesOfKind(SpriteKind.Armor)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
         mySprite = sprites.create(assets.image`Cyclone`, SpriteKind.Player)
         if (statusbar.value != 0) {
             statusbar.value = 100
@@ -159,7 +160,7 @@ function goNextLevel () {
             pulsePct += pulsePct * 10
             gameTimer += -100
             info.changeLifeBy(1)
-            if (curLevel >= 5) {
+            if (curLevel >= 1) {
                 bCircle = 1
             }
         } else {
@@ -181,54 +182,48 @@ function goNextLevel () {
         bBottomHit = 0
     }
 }
-controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!(controller.up.isPressed()) && (!(controller.right.isPressed()) && !(controller.left.isPressed()))) {
-        sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
-        mySprite = sprites.create(assets.image`Cyclone2`, SpriteKind.Weapon)
-        if (bCircle) {
-            projectile.follow(mySprite)
-        }
-        mySprite2 = sprites.create(assets.image`laser0`, SpriteKind.heroProjectile)
-        mySprite2.setVelocity(0, laserV)
-        mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
-        statusbar.value += statusBarPct
-        music.pewPew.play()
-    }
-})
 function circleEnemy () {
     newSprite = sprites.create(assets.image`circleEnemy`, SpriteKind.CircleEnemy)
+    quad = randint(1, 4)
     cubicbird.circleSpriteAt(
     newSprite,
-    randint(65, 95),
-    randint(55, 85),
-    40,
-    35
+    80,
+    60,
+    25,
+    25
     )
     vx = 0
     vy = 0
     newSprite.setFlag(SpriteFlag.AutoDestroy, true)
 }
+sprites.onOverlap(SpriteKind.heroProjectile, SpriteKind.Projectile, function (sprite, otherSprite) {
+    otherSprite.destroy()
+    sprite.destroy()
+    info.changeScoreBy(50)
+    statusbar.value += 1
+})
 let mySprite4: Sprite = null
 let mySprite5: Sprite = null
-let mySprite3: Sprite = null
 let mySprite6: Sprite = null
 let vy = 0
 let vx = 0
+let quad = 0
 let bShot4 = 0
 let bShot3 = 0
 let bShot2 = 0
 let bShot = 0
-let bBottomHit = 0
-let bTopHit = 0
-let bRightHit = 0
-let bLeftHit = 0
-let armorSprite: Sprite = null
 let bCreated4 = 0
 let bCreated3 = 0
 let bCreated2 = 0
 let bCreated = 0
+let bBottomHit = 0
+let bTopHit = 0
+let bRightHit = 0
+let bLeftHit = 0
 let bCircleCreated = 0
+let armorSprite: Sprite = null
 let mySprite2: Sprite = null
+let mySprite3: Sprite = null
 let statusBarPct = 0
 let createPct = 0
 let pulsePct = 0
@@ -237,7 +232,6 @@ let levelCtr = 0
 let killCtr = 0
 let laserV = 0
 let newSprite: Sprite = null
-let projectile: Sprite = null
 let bCircle = 0
 let mySprite: Sprite = null
 let statusbar: StatusBarSprite = null
@@ -248,7 +242,7 @@ statusbar.positionDirection(CollisionDirection.Top)
 statusbar.max = 100
 mySprite = sprites.create(assets.image`Cyclone`, SpriteKind.Player)
 bCircle = 0
-projectile = sprites.createProjectileFromSprite(assets.image`squareAmmo`, newSprite, 0, 0)
+let projectile = sprites.createProjectileFromSprite(assets.image`squareAmmo`, newSprite, 0, 0)
 info.setLife(3)
 laserV = 300
 let pulseV = 150
@@ -279,36 +273,6 @@ game.onUpdateInterval(gameTimer, function () {
         timer.after(2000, function () {
             bShot4 = 0
         })
-    }
-})
-game.onUpdateInterval(500, function () {
-    if (bCircle) {
-        if (Math.percentChance(10) && !(bCircleCreated)) {
-            circleEnemy()
-            bCircleCreated = 1
-        } else {
-            if (bCircleCreated) {
-                if (Math.percentChance(20)) {
-                    if (newSprite.y > scene.screenHeight() / 2) {
-                        vy = -50
-                    } else {
-                        vy = 50
-                    }
-                    if (newSprite.x > scene.screenWidth() / 2) {
-                        vx = -50
-                    } else {
-                        vx = 50
-                    }
-                    projectile = sprites.createProjectileFromSprite(assets.image`bomb`, newSprite, vx, vy)
-                    projectile.follow(mySprite, 100)
-                }
-            }
-        }
-    }
-})
-forever(function () {
-    if (levelCtr == curLevel) {
-        goNextLevel()
     }
 })
 forever(function () {
@@ -359,5 +323,42 @@ forever(function () {
         mySprite3.setVelocity(0, pulseV)
         mySprite3.setFlag(SpriteFlag.AutoDestroy, true)
         bShot2 = 1
+    }
+})
+forever(function () {
+    if (bCircleCreated) {
+        if (Math.percentChance(100)) {
+            if (newSprite.y > scene.screenHeight() / 2) {
+                vy = -50
+            } else {
+                vy = 50
+            }
+            if (newSprite.x > scene.screenWidth() / 2) {
+                vx = -50
+            } else {
+                vx = 50
+            }
+            if (Math.trunc(newSprite.x) == Math.trunc(newSprite.y) && newSprite.y < scene.screenHeight() / 2) {
+                projectile = sprites.createProjectileFromSprite(assets.image`bomb`, newSprite, vx, vy)
+                projectile.follow(mySprite, 150)
+            }
+            if (Math.trunc(newSprite.x) == scene.screenHeight() - Math.trunc(newSprite.y) && newSprite.y > scene.screenHeight() / 2) {
+                projectile = sprites.createProjectileFromSprite(assets.image`bomb`, newSprite, vx, vy)
+                projectile.follow(mySprite, 150)
+            }
+        }
+    }
+})
+forever(function () {
+    if (levelCtr == curLevel) {
+        goNextLevel()
+    }
+})
+game.onUpdateInterval(100, function () {
+    if (bCircle) {
+        if (Math.percentChance(10) && !(bCircleCreated)) {
+            circleEnemy()
+            bCircleCreated = 1
+        }
     }
 })
