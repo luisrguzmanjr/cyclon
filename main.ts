@@ -434,7 +434,7 @@ forever(function () {
         goNextLevel()
     }
 })
-game.onUpdateInterval(100, function () {
+game.onUpdateInterval(500, function () {
     if (bCircle) {
         if (Math.percentChance(10) && !(bCircleCreated)) {
             circleEnemy()
