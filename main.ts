@@ -13,8 +13,10 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.BotLeftMarker, function (spr
     if (!(controller.B.isPressed())) {
         if (!(bBotLeft)) {
             mySprite = sprites.create(assets.image`CycloneCorner1`, SpriteKind.Player)
-        } else {
             bBotLeft = 1
+        } else {
+            info.changeLifeBy(-1)
+            resetLevel()
         }
     }
     sprite.destroy()
@@ -31,7 +33,7 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         mySprite3 = sprites.create(assets.image`Cyclone0`, SpriteKind.Weapon)
         mySprite2 = sprites.create(assets.image`laser0`, SpriteKind.heroProjectile)
         mySprite2.setVelocity(0, -1 * laserV)
-        mySprite2.setFlag(SpriteFlag.DestroyOnWall, true)
+        mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
         statusbar.value += statusBarPct
         music.pewPew.play()
     }
@@ -40,8 +42,10 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.TopRightMarker, function (sp
     if (!(controller.B.isPressed())) {
         if (!(bTopRight)) {
             mySprite = sprites.create(assets.image`CycloneCorner0`, SpriteKind.Player)
-        } else {
             bTopRight = 1
+        } else {
+            info.changeLifeBy(-1)
+            resetLevel()
         }
     }
     sprite.destroy()
@@ -69,7 +73,7 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         mySprite3 = sprites.create(assets.image`Cyclone3`, SpriteKind.Weapon)
         mySprite2 = sprites.create(assets.image`laser1`, SpriteKind.heroProjectile)
         mySprite2.setVelocity(-1 * laserV, 0)
-        mySprite2.setFlag(SpriteFlag.DestroyOnWall, true)
+        mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
         statusbar.value += statusBarPct
         music.pewPew.play()
     }
@@ -78,8 +82,10 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.TopLeftMarker, function (spr
     if (!(controller.B.isPressed())) {
         if (!(bTopLeft)) {
             mySprite = sprites.create(assets.image`CycloneCorner`, SpriteKind.Player)
-        } else {
             bTopLeft = 1
+        } else {
+            info.changeLifeBy(-1)
+            resetLevel()
         }
     }
     sprite.destroy()
@@ -93,40 +99,36 @@ sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.heroProjectile, function (s
 })
 sprites.onOverlap(SpriteKind.Food, SpriteKind.Player, function (sprite, otherSprite) {
     if (sprite.x >= 70 && sprite.x < 80) {
-        // info.changeLifeBy(-1)
-        // resetLevel()
         if (bLeftHit) {
-        	
+            info.changeLifeBy(-1)
+            resetLevel()
         } else {
             bLeftHit = 1
             mySprite = sprites.create(assets.image`Cyclone4`, SpriteKind.Player)
         }
     }
     if (sprite.x >= 85 && sprite.x < 90) {
-        // info.changeLifeBy(-1)
-        // resetLevel()
         if (bRightHit) {
-        	
+            info.changeLifeBy(-1)
+            resetLevel()
         } else {
             bRightHit = 1
             mySprite = sprites.create(assets.image`Cyclone5`, SpriteKind.Player)
         }
     }
     if (sprite.y >= 50 && sprite.y < 60) {
-        // info.changeLifeBy(-1)
-        // resetLevel()
         if (bTopHit) {
-        	
+            info.changeLifeBy(-1)
+            resetLevel()
         } else {
             bTopHit = 1
             mySprite = sprites.create(assets.image`Cyclone6`, SpriteKind.Player)
         }
     }
     if (sprite.y >= 65 && sprite.y < 70) {
-        // info.changeLifeBy(-1)
-        // resetLevel()
         if (bBottomHit) {
-        	
+            info.changeLifeBy(-1)
+            resetLevel()
         } else {
             bBottomHit = 1
             mySprite = sprites.create(assets.image`Cyclone7`, SpriteKind.Player)
@@ -142,9 +144,8 @@ function resetLevel () {
     statusbar.value = 0
     goNextLevel()
 }
-// statusbar.value += statusBarPct
 controller.B.onEvent(ControllerButtonEvent.Repeated, function () {
-	
+    statusbar.value += statusBarPct / 4
 })
 statusbars.onZero(StatusBarKind.Health, function (status) {
     resetLevel()
@@ -172,9 +173,12 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.heroProjectile, function (sprite,
 })
 sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.Marker, function (sprite, otherSprite) {
     if (Math.percentChance(5)) {
-        projectile = sprites.createProjectileFromSprite(assets.image`bomb`, newSprite, vx, vy)
-        projectile.follow(mySprite, 150)
-        projectile.setFlag(SpriteFlag.AutoDestroy, true)
+        if (!(bShot5)) {
+            projectile = sprites.createProjectileFromSprite(assets.image`bomb`, newSprite, vx, vy)
+            projectile.follow(mySprite, 150)
+            projectile.setFlag(SpriteFlag.AutoDestroy, true)
+            bShot5 = 1
+        }
     }
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -222,7 +226,6 @@ function goNextLevel () {
         } else {
             game.splash("Replay Wave! Level:", curLevel)
         }
-        sprites.destroyAllSpritesOfKind(SpriteKind.StatusBar)
         statusbar.value = 100
         bCreated = 0
         bCreated2 = 0
@@ -233,6 +236,7 @@ function goNextLevel () {
         bShot2 = 0
         bShot3 = 0
         bShot4 = 0
+        bShot5 = 0
         bLeftHit = 0
         bRightHit = 0
         bTopHit = 0
@@ -267,8 +271,10 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.BotRightMarker, function (sp
     if (!(controller.B.isPressed())) {
         if (!(bBotRight)) {
             mySprite = sprites.create(assets.image`CycloneCorner2`, SpriteKind.Player)
-        } else {
             bBotRight = 1
+        } else {
+            info.changeLifeBy(-1)
+            resetLevel()
         }
     }
     sprite.destroy()
@@ -283,6 +289,7 @@ let bShot2 = 0
 let bShot = 0
 let vy = 0
 let vx = 0
+let bShot5 = 0
 let bCreated4 = 0
 let bCreated3 = 0
 let bCreated2 = 0
@@ -311,7 +318,7 @@ let projectile: Sprite = null
 let bCircle = 0
 let mySprite: Sprite = null
 let statusbar: StatusBarSprite = null
-game.splash("CYCLONE", "Invasion!")
+game.splash("CYCLON", "Invasion!")
 info.setScore(0)
 statusbar = statusbars.create(60, 4, StatusBarKind.Health)
 statusbar.positionDirection(CollisionDirection.Top)
@@ -348,6 +355,11 @@ game.onUpdateInterval(gameTimer, function () {
     if (bShot4) {
         timer.after(2000, function () {
             bShot4 = 0
+        })
+    }
+    if (bShot5) {
+        timer.after(2000, function () {
+            bShot5 = 0
         })
     }
 })
