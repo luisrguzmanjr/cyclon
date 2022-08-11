@@ -72,6 +72,7 @@ sprites.onOverlap(SpriteKind.Food, SpriteKind.TopMarker, function (sprite, other
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     armorSprite = sprites.create(assets.image`Armor`, SpriteKind.Armor)
+    bArmor = 1
 })
 function createTestMarkers (x: number, y: number, r: number) {
     mySprite7 = sprites.create(assets.image`Marker2`, SpriteKind.Marker)
@@ -95,6 +96,7 @@ function createTestMarkers (x: number, y: number, r: number) {
 function doExplosion () {
     sprites.destroyAllSpritesOfKind(SpriteKind.Player)
     sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Armor)
     sprites.destroyAllSpritesOfKind(SpriteKind.TopMarker)
     sprites.destroyAllSpritesOfKind(SpriteKind.BotMarker)
     sprites.destroyAllSpritesOfKind(SpriteKind.LeftMarker)
@@ -109,6 +111,9 @@ function doExplosion () {
     } else {
         mySprite2 = sprites.create(assets.image`CycloneCorners`, SpriteKind.TopLeftMarker)
     }
+    if (bArmor) {
+        mySprite2 = sprites.create(assets.image`myImage0`, SpriteKind.Player)
+    }
     mySprite2.setVelocity(-50, -50)
     if (bTopHit) {
         mySprite3 = sprites.create(assets.image`Cyclone6`, SpriteKind.Player)
@@ -120,6 +125,9 @@ function doExplosion () {
         mySprite4 = sprites.create(assets.image`CycloneCorner0`, SpriteKind.Player)
     } else {
         mySprite4 = sprites.create(assets.image`CycloneCorners0`, SpriteKind.TopRightMarker)
+    }
+    if (bArmor) {
+        mySprite4 = sprites.create(assets.image`myImage2`, SpriteKind.Player)
     }
     mySprite4.setVelocity(50, -50)
     if (bLeftHit) {
@@ -139,6 +147,9 @@ function doExplosion () {
     } else {
         mySprite7 = sprites.create(assets.image`CycloneCorners1`, SpriteKind.BotLeftMarker)
     }
+    if (bArmor) {
+        mySprite7 = sprites.create(assets.image`myImage1`, SpriteKind.Player)
+    }
     mySprite7.setVelocity(-50, 50)
     if (bBottomHit) {
         mySprite8 = sprites.create(assets.image`Cyclone7`, SpriteKind.Player)
@@ -150,6 +161,9 @@ function doExplosion () {
         mySprite9 = sprites.create(assets.image`CycloneCorner2`, SpriteKind.Player)
     } else {
         mySprite9 = sprites.create(assets.image`CycloneCorners2`, SpriteKind.BotRightMarker)
+    }
+    if (bArmor) {
+        mySprite9 = sprites.create(assets.image`myImage`, SpriteKind.Player)
     }
     mySprite9.setVelocity(50, 50)
     pause(1000)
@@ -192,6 +206,13 @@ sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.heroProjectile, function (s
     bCircleCreated = 0
     statusbar.value += 1
 })
+function displayLevel () {
+    textSprite2 = textsprite.create("Level " + levelCtr.toString())
+    textSprite2.setOutline(1, 6)
+    textSprite2.setBorder(1, 6, 1)
+    textSprite2.setStayInScreen(true)
+    textSprite2.setPosition(135, 112)
+}
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Armor, function (sprite, otherSprite) {
     sprite.destroy()
 })
@@ -240,7 +261,9 @@ function resetLevel () {
     cubicbird.destroyAllSpriteOfKind(SpriteKind.heroProjectile)
     Lifectr += -1
     textSprite.destroy()
+    textSprite2.destroy()
     displayLife()
+    displayLevel()
     doExplosion()
     if (Lifectr > 0) {
         game.splash("Replay Wave! Level:", levelCtr)
@@ -309,13 +332,16 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 controller.B.onEvent(ControllerButtonEvent.Released, function () {
     sprites.destroyAllSpritesOfKind(SpriteKind.Armor)
+    bArmor = 0
 })
 function goNextLevel () {
     killCtr = 0
     levelCtr += 1
     Lifectr += 1
     textSprite.destroy()
+    textSprite2.destroy()
     displayLife()
+    displayLevel()
     game.splash("Next Wave! Level:", levelCtr)
     levelCtr += 1
     createPct += createPct * 10
@@ -375,6 +401,7 @@ let bCreated4 = 0
 let bCreated3 = 0
 let bCreated2 = 0
 let bCreated = 0
+let textSprite2: TextSprite = null
 let bCircleCreated = 0
 let mySprite9: Sprite = null
 let bBotRight = 0
@@ -386,6 +413,7 @@ let bLeftHit = 0
 let mySprite4: Sprite = null
 let bTopLeft = 0
 let mySprite7: Sprite = null
+let bArmor = 0
 let armorSprite: Sprite = null
 let bTopHit = 0
 let bRightHit = 0
@@ -397,21 +425,22 @@ let bBotLeft = 0
 let statusBarPct = 0
 let createPct = 0
 let pulsePct = 0
-let levelCtr = 0
 let killCtr = 0
 let laserV = 0
 let newSprite: Sprite = null
 let projectile: Sprite = null
 let bCircle = 0
 let statusbar: StatusBarSprite = null
+let levelCtr = 0
 let Lifectr = 0
 game.splash("CYCLON", "Invasion!")
 info.setScore(0)
-statusbar = statusbars.create(60, 4, StatusBarKind.Health)
-statusbar.positionDirection(CollisionDirection.Top)
+statusbar = statusbars.create(48, 4, StatusBarKind.Health)
 statusbar.max = 100
+statusbar.setPosition(24, 18)
 Lifectr = 3
 displayLife()
+displayLevel()
 bCircle = 0
 projectile = sprites.createProjectileFromSprite(assets.image`bomb`, newSprite, 0, 0)
 laserV = 300
