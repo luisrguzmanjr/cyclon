@@ -128,6 +128,7 @@ function doExplosion () {
         mySprite9 = sprites.create(assets.image`CycloneCorners2`, SpriteKind.BotRightMarker)
     }
     mySprite9.setVelocity(50, 50)
+    pause(1000)
 }
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (!(controller.up.isPressed()) && (!(controller.down.isPressed()) && !(controller.right.isPressed()))) {
@@ -204,13 +205,7 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Armor, function (sprite, oth
 function resetLevel () {
     killCtr = levelCtr * 5
     statusbar.value = 0
-    if (info.life() == 0) {
-        doExplosion()
-        game.over(false)
-    } else {
-        doExplosion()
-        goNextLevel()
-    }
+    goNextLevel()
 }
 controller.B.onEvent(ControllerButtonEvent.Repeated, function () {
     statusbar.value += statusBarPct / 4
@@ -264,55 +259,61 @@ controller.B.onEvent(ControllerButtonEvent.Released, function () {
     sprites.destroyAllSpritesOfKind(SpriteKind.Armor)
 })
 function goNextLevel () {
-    if (killCtr >= levelCtr * 5) {
-        killCtr = 0
-        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
-        sprites.destroyAllSpritesOfKind(SpriteKind.CircleEnemy)
-        sprites.destroyAllSpritesOfKind(SpriteKind.Player)
-        sprites.destroyAllSpritesOfKind(SpriteKind.Food)
-        sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
-        sprites.destroyAllSpritesOfKind(SpriteKind.heroProjectile)
-        sprites.destroyAllSpritesOfKind(SpriteKind.Armor)
-        sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
-        sprites.destroyAllSpritesOfKind(SpriteKind.Marker)
-        sprites.destroyAllSpritesOfKind(SpriteKind.TopLeftMarker)
-        sprites.destroyAllSpritesOfKind(SpriteKind.TopRightMarker)
-        sprites.destroyAllSpritesOfKind(SpriteKind.BotLeftMarker)
-        sprites.destroyAllSpritesOfKind(SpriteKind.BotRightMarker)
-        if (statusbar.value != 0) {
-            curLevel += 1
-            game.splash("Next Wave! Level:", curLevel)
-            levelCtr += 1
-            createPct += createPct * 10
-            pulsePct += pulsePct * 10
-            gameTimer += -100
-            info.changeLifeBy(1)
-            if (curLevel >= 5) {
-                bCircle = 1
+    if (info.life() == 0) {
+        doExplosion()
+        game.over(false)
+    } else {
+        if (killCtr >= levelCtr * 5) {
+            killCtr = 0
+            sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+            sprites.destroyAllSpritesOfKind(SpriteKind.CircleEnemy)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Player)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Food)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
+            sprites.destroyAllSpritesOfKind(SpriteKind.heroProjectile)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Armor)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
+            sprites.destroyAllSpritesOfKind(SpriteKind.Marker)
+            sprites.destroyAllSpritesOfKind(SpriteKind.TopLeftMarker)
+            sprites.destroyAllSpritesOfKind(SpriteKind.TopRightMarker)
+            sprites.destroyAllSpritesOfKind(SpriteKind.BotLeftMarker)
+            sprites.destroyAllSpritesOfKind(SpriteKind.BotRightMarker)
+            if (statusbar.value != 0) {
+                curLevel += 1
+                game.splash("Next Wave! Level:", curLevel)
+                levelCtr += 1
+                createPct += createPct * 10
+                pulsePct += pulsePct * 10
+                gameTimer += -100
+                info.changeLifeBy(1)
+                if (curLevel >= 5) {
+                    bCircle = 1
+                }
+            } else {
+                doExplosion()
+                game.splash("Replay Wave! Level:", curLevel)
             }
-        } else {
-            game.splash("Replay Wave! Level:", curLevel)
+            statusbar.value = 100
+            bCreated = 0
+            bCreated2 = 0
+            bCreated3 = 0
+            bCreated4 = 0
+            bCircleCreated = 0
+            bShot = 0
+            bShot2 = 0
+            bShot3 = 0
+            bShot4 = 0
+            bShot5 = 0
+            bLeftHit = 0
+            bRightHit = 0
+            bTopHit = 0
+            bBottomHit = 0
+            bTopLeft = 0
+            bTopRight = 0
+            bBotLeft = 0
+            bBotRight = 0
+            createTestMarkers(scene.screenWidth(), scene.screenHeight(), 2)
         }
-        statusbar.value = 100
-        bCreated = 0
-        bCreated2 = 0
-        bCreated3 = 0
-        bCreated4 = 0
-        bCircleCreated = 0
-        bShot = 0
-        bShot2 = 0
-        bShot3 = 0
-        bShot4 = 0
-        bShot5 = 0
-        bLeftHit = 0
-        bRightHit = 0
-        bTopHit = 0
-        bBottomHit = 0
-        bTopLeft = 0
-        bTopRight = 0
-        bBotLeft = 0
-        bBotRight = 0
-        createTestMarkers(scene.screenWidth(), scene.screenHeight(), 2)
     }
 }
 function circleEnemy () {
@@ -394,7 +395,7 @@ statusbar.positionDirection(CollisionDirection.Top)
 statusbar.max = 100
 bCircle = 0
 projectile = sprites.createProjectileFromSprite(assets.image`bomb`, newSprite, 0, 0)
-info.setLife(1)
+info.setLife(3)
 laserV = 300
 let pulseV = 150
 killCtr = 0
