@@ -10,16 +10,15 @@ namespace SpriteKind {
     export const BotRightMarker = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.BotLeftMarker, function (sprite, otherSprite) {
+    sprite.destroy()
     if (!(controller.B.isPressed())) {
         if (!(bBotLeft)) {
             mySprite = sprites.create(assets.image`CycloneCorner1`, SpriteKind.Player)
             bBotLeft = 1
         } else {
-            info.changeLifeBy(-1)
             resetLevel()
         }
     }
-    sprite.destroy()
 })
 sprites.onOverlap(SpriteKind.heroProjectile, SpriteKind.Food, function (sprite, otherSprite) {
     otherSprite.destroy()
@@ -39,16 +38,15 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.TopRightMarker, function (sprite, otherSprite) {
+    sprite.destroy()
     if (!(controller.B.isPressed())) {
         if (!(bTopRight)) {
             mySprite = sprites.create(assets.image`CycloneCorner0`, SpriteKind.Player)
             bTopRight = 1
         } else {
-            info.changeLifeBy(-1)
             resetLevel()
         }
     }
-    sprite.destroy()
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     armorSprite = sprites.create(assets.image`Armor`, SpriteKind.Armor)
@@ -74,12 +72,12 @@ function createTestMarkers (x: number, y: number, r: number) {
 }
 function doExplosion () {
     sprites.destroyAllSpritesOfKind(SpriteKind.Player)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
     sprites.destroyAllSpritesOfKind(SpriteKind.TopLeftMarker)
     sprites.destroyAllSpritesOfKind(SpriteKind.TopRightMarker)
     sprites.destroyAllSpritesOfKind(SpriteKind.BotLeftMarker)
     sprites.destroyAllSpritesOfKind(SpriteKind.BotRightMarker)
     mySprite = sprites.create(assets.image`Cyclone`, SpriteKind.Player)
-    console.logValue("Top Left", 0)
     if (bTopLeft) {
         mySprite2 = sprites.create(assets.image`CycloneCorner`, SpriteKind.TopLeftMarker)
     } else {
@@ -142,16 +140,15 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.TopLeftMarker, function (sprite, otherSprite) {
+    sprite.destroy()
     if (!(controller.B.isPressed())) {
         if (!(bTopLeft)) {
             mySprite = sprites.create(assets.image`CycloneCorner`, SpriteKind.Player)
             bTopLeft = 1
         } else {
-            info.changeLifeBy(-1)
             resetLevel()
         }
     }
-    sprite.destroy()
 })
 sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.heroProjectile, function (sprite, otherSprite) {
     sprite.destroy()
@@ -163,7 +160,6 @@ sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.heroProjectile, function (s
 sprites.onOverlap(SpriteKind.Food, SpriteKind.Player, function (sprite, otherSprite) {
     if (sprite.x >= 70 && sprite.x < 80) {
         if (bLeftHit) {
-            info.changeLifeBy(-1)
             resetLevel()
         } else {
             bLeftHit = 1
@@ -172,7 +168,6 @@ sprites.onOverlap(SpriteKind.Food, SpriteKind.Player, function (sprite, otherSpr
     }
     if (sprite.x >= 85 && sprite.x < 90) {
         if (bRightHit) {
-            info.changeLifeBy(-1)
             resetLevel()
         } else {
             bRightHit = 1
@@ -181,7 +176,6 @@ sprites.onOverlap(SpriteKind.Food, SpriteKind.Player, function (sprite, otherSpr
     }
     if (sprite.y >= 50 && sprite.y < 60) {
         if (bTopHit) {
-            info.changeLifeBy(-1)
             resetLevel()
         } else {
             bTopHit = 1
@@ -190,7 +184,6 @@ sprites.onOverlap(SpriteKind.Food, SpriteKind.Player, function (sprite, otherSpr
     }
     if (sprite.y >= 65 && sprite.y < 70) {
         if (bBottomHit) {
-            info.changeLifeBy(-1)
             resetLevel()
         } else {
             bBottomHit = 1
@@ -238,8 +231,13 @@ function resetVariables () {
     createTestMarkers(scene.screenWidth(), scene.screenHeight(), 2)
 }
 function resetLevel () {
+    cubicbird.destroyAllSpriteOfKind(SpriteKind.Food)
+    cubicbird.destroyAllSpriteOfKind(SpriteKind.heroProjectile)
+    Lifectr += -1
+    textSprite.destroy()
+    displayLife()
     doExplosion()
-    if (info.life() != 0) {
+    if (Lifectr > 0) {
         game.splash("Replay Wave! Level:", curLevel)
     } else {
         game.splash("Good game! Try again!", curLevel)
@@ -301,12 +299,15 @@ controller.B.onEvent(ControllerButtonEvent.Released, function () {
 function goNextLevel () {
     killCtr = 0
     curLevel += 1
+    Lifectr += 1
+    textSprite.destroy()
+    displayLife()
     game.splash("Next Wave! Level:", curLevel)
     levelCtr += 1
     createPct += createPct * 10
     pulsePct += pulsePct * 10
     gameTimer += -100
-    info.changeLifeBy(1)
+    killCtr += 1
     if (curLevel >= 5) {
         bCircle = 1
     }
@@ -325,6 +326,13 @@ function circleEnemy () {
     vy = 0
     newSprite.setFlag(SpriteFlag.AutoDestroy, true)
 }
+function displayLife () {
+    textSprite = textsprite.create("Lives " + Lifectr.toString())
+    textSprite.setOutline(1, 6)
+    textSprite.setBorder(1, 6, 1)
+    textSprite.setStayInScreen(true)
+    textSprite.setPosition(15, 6)
+}
 sprites.onOverlap(SpriteKind.heroProjectile, SpriteKind.Projectile, function (sprite, otherSprite) {
     otherSprite.destroy()
     sprite.destroy()
@@ -332,19 +340,19 @@ sprites.onOverlap(SpriteKind.heroProjectile, SpriteKind.Projectile, function (sp
     statusbar.value += 1
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.BotRightMarker, function (sprite, otherSprite) {
+    sprite.destroy()
     if (!(controller.B.isPressed())) {
         if (!(bBotRight)) {
             mySprite = sprites.create(assets.image`CycloneCorner2`, SpriteKind.Player)
             bBotRight = 1
         } else {
-            info.changeLifeBy(-1)
             resetLevel()
         }
     }
-    sprite.destroy()
 })
 let vy = 0
 let vx = 0
+let textSprite: TextSprite = null
 let bShot5 = 0
 let bShot4 = 0
 let bShot3 = 0
@@ -383,14 +391,16 @@ let newSprite: Sprite = null
 let projectile: Sprite = null
 let bCircle = 0
 let statusbar: StatusBarSprite = null
+let Lifectr = 0
 game.splash("CYCLON", "Invasion!")
 info.setScore(0)
 statusbar = statusbars.create(60, 4, StatusBarKind.Health)
 statusbar.positionDirection(CollisionDirection.Top)
 statusbar.max = 100
+Lifectr = 3
+displayLife()
 bCircle = 0
 projectile = sprites.createProjectileFromSprite(assets.image`bomb`, newSprite, 0, 0)
-info.setLife(1)
 laserV = 300
 let pulseV = 150
 killCtr = 0
