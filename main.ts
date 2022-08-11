@@ -202,10 +202,50 @@ sprites.onOverlap(SpriteKind.Food, SpriteKind.Player, function (sprite, otherSpr
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Armor, function (sprite, otherSprite) {
     sprite.destroy()
 })
+function resetVariables () {
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+    sprites.destroyAllSpritesOfKind(SpriteKind.CircleEnemy)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Player)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Food)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
+    sprites.destroyAllSpritesOfKind(SpriteKind.heroProjectile)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Armor)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Marker)
+    sprites.destroyAllSpritesOfKind(SpriteKind.TopLeftMarker)
+    sprites.destroyAllSpritesOfKind(SpriteKind.TopRightMarker)
+    sprites.destroyAllSpritesOfKind(SpriteKind.BotLeftMarker)
+    sprites.destroyAllSpritesOfKind(SpriteKind.BotRightMarker)
+    statusbar.value = 100
+    bCreated = 0
+    bCreated2 = 0
+    bCreated3 = 0
+    bCreated4 = 0
+    bCircleCreated = 0
+    bShot = 0
+    bShot2 = 0
+    bShot3 = 0
+    bShot4 = 0
+    bShot5 = 0
+    bLeftHit = 0
+    bRightHit = 0
+    bTopHit = 0
+    bBottomHit = 0
+    bTopLeft = 0
+    bTopRight = 0
+    bBotLeft = 0
+    bBotRight = 0
+    createTestMarkers(scene.screenWidth(), scene.screenHeight(), 2)
+}
 function resetLevel () {
-    killCtr = levelCtr * 5
-    statusbar.value = 0
-    goNextLevel()
+    doExplosion()
+    if (info.life() != 0) {
+        game.splash("Replay Wave! Level:", curLevel)
+    } else {
+        game.splash("Good game! Try again!", curLevel)
+        game.over(false)
+    }
+    resetVariables()
 }
 controller.B.onEvent(ControllerButtonEvent.Repeated, function () {
     statusbar.value += statusBarPct / 4
@@ -259,62 +299,18 @@ controller.B.onEvent(ControllerButtonEvent.Released, function () {
     sprites.destroyAllSpritesOfKind(SpriteKind.Armor)
 })
 function goNextLevel () {
-    if (info.life() == 0) {
-        doExplosion()
-        game.over(false)
-    } else {
-        if (killCtr >= levelCtr * 5) {
-            killCtr = 0
-            sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
-            sprites.destroyAllSpritesOfKind(SpriteKind.CircleEnemy)
-            sprites.destroyAllSpritesOfKind(SpriteKind.Player)
-            sprites.destroyAllSpritesOfKind(SpriteKind.Food)
-            sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
-            sprites.destroyAllSpritesOfKind(SpriteKind.heroProjectile)
-            sprites.destroyAllSpritesOfKind(SpriteKind.Armor)
-            sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
-            sprites.destroyAllSpritesOfKind(SpriteKind.Marker)
-            sprites.destroyAllSpritesOfKind(SpriteKind.TopLeftMarker)
-            sprites.destroyAllSpritesOfKind(SpriteKind.TopRightMarker)
-            sprites.destroyAllSpritesOfKind(SpriteKind.BotLeftMarker)
-            sprites.destroyAllSpritesOfKind(SpriteKind.BotRightMarker)
-            if (statusbar.value != 0) {
-                curLevel += 1
-                game.splash("Next Wave! Level:", curLevel)
-                levelCtr += 1
-                createPct += createPct * 10
-                pulsePct += pulsePct * 10
-                gameTimer += -100
-                info.changeLifeBy(1)
-                if (curLevel >= 5) {
-                    bCircle = 1
-                }
-            } else {
-                doExplosion()
-                game.splash("Replay Wave! Level:", curLevel)
-            }
-            statusbar.value = 100
-            bCreated = 0
-            bCreated2 = 0
-            bCreated3 = 0
-            bCreated4 = 0
-            bCircleCreated = 0
-            bShot = 0
-            bShot2 = 0
-            bShot3 = 0
-            bShot4 = 0
-            bShot5 = 0
-            bLeftHit = 0
-            bRightHit = 0
-            bTopHit = 0
-            bBottomHit = 0
-            bTopLeft = 0
-            bTopRight = 0
-            bBotLeft = 0
-            bBotRight = 0
-            createTestMarkers(scene.screenWidth(), scene.screenHeight(), 2)
-        }
+    killCtr = 0
+    curLevel += 1
+    game.splash("Next Wave! Level:", curLevel)
+    levelCtr += 1
+    createPct += createPct * 10
+    pulsePct += pulsePct * 10
+    gameTimer += -100
+    info.changeLifeBy(1)
+    if (curLevel >= 5) {
+        bCircle = 1
     }
+    resetVariables()
 }
 function circleEnemy () {
     newSprite = sprites.create(assets.image`circleEnemy`, SpriteKind.CircleEnemy)
@@ -347,13 +343,13 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.BotRightMarker, function (sp
     }
     sprite.destroy()
 })
+let vy = 0
+let vx = 0
+let bShot5 = 0
 let bShot4 = 0
 let bShot3 = 0
 let bShot2 = 0
 let bShot = 0
-let vy = 0
-let vx = 0
-let bShot5 = 0
 let bCreated4 = 0
 let bCreated3 = 0
 let bCreated2 = 0
@@ -381,7 +377,6 @@ let statusBarPct = 0
 let createPct = 0
 let pulsePct = 0
 let curLevel = 0
-let levelCtr = 0
 let killCtr = 0
 let laserV = 0
 let newSprite: Sprite = null
@@ -395,11 +390,11 @@ statusbar.positionDirection(CollisionDirection.Top)
 statusbar.max = 100
 bCircle = 0
 projectile = sprites.createProjectileFromSprite(assets.image`bomb`, newSprite, 0, 0)
-info.setLife(3)
+info.setLife(1)
 laserV = 300
 let pulseV = 150
 killCtr = 0
-levelCtr = 1
+let levelCtr = 1
 curLevel = 1
 pulsePct = 1e-20
 createPct = 1e-20
@@ -433,73 +428,70 @@ game.onUpdateInterval(gameTimer, function () {
         })
     }
 })
-forever(function () {
-    if (Math.percentChance(createPct) && !(bCreated4)) {
-        mySprite6 = sprites.create(assets.image`Enemy2`, SpriteKind.Enemy)
-        mySprite6.setPosition(80, 88)
-        bCreated4 = 1
-    }
-    if (Math.percentChance(pulsePct) && bCreated4 && !(bShot4)) {
-        mySprite3 = sprites.create(assets.image`Pulse`, SpriteKind.Food)
-        mySprite3.setPosition(80, 120)
-        mySprite3.setVelocity(0, -1 * pulseV)
-        mySprite3.setFlag(SpriteFlag.AutoDestroy, true)
-        bShot4 = 1
-    }
-    if (Math.percentChance(createPct) && !(bCreated3)) {
-        mySprite5 = sprites.create(assets.image`Enemy1`, SpriteKind.Enemy)
-        mySprite5.setPosition(128, 60)
-        bCreated3 = 1
-    }
-    if (Math.percentChance(pulsePct) && bCreated3 && !(bShot3)) {
-        mySprite3 = sprites.create(assets.image`Pulse`, SpriteKind.Food)
-        mySprite3.setPosition(160, 60)
-        mySprite3.setVelocity(-1 * pulseV, 0)
-        mySprite3.setFlag(SpriteFlag.AutoDestroy, true)
-        bShot3 = 1
-    }
-    if (Math.percentChance(createPct) && !(bCreated)) {
-        mySprite3 = sprites.create(assets.image`Enemy`, SpriteKind.Enemy)
-        mySprite3.setPosition(32, 60)
-        bCreated = 1
-    }
-    if (Math.percentChance(pulsePct) && bCreated && !(bShot)) {
-        mySprite2 = sprites.create(assets.image`Pulse`, SpriteKind.Food)
-        mySprite2.setPosition(0, 60)
-        mySprite2.setVelocity(pulseV, 0)
-        mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
-        bShot = 1
-    }
-    if (Math.percentChance(createPct) && !(bCreated2)) {
-        mySprite4 = sprites.create(assets.image`Enemy0`, SpriteKind.Enemy)
-        mySprite4.setPosition(80, 32)
-        bCreated2 = 1
-    }
-    if (Math.percentChance(pulsePct) && bCreated2 && !(bShot2)) {
-        mySprite3 = sprites.create(assets.image`Pulse`, SpriteKind.Food)
-        mySprite3.setPosition(80, 0)
-        mySprite3.setVelocity(0, pulseV)
-        mySprite3.setFlag(SpriteFlag.AutoDestroy, true)
-        bShot2 = 1
-    }
-})
-forever(function () {
-    if (bCircleCreated) {
-        if (newSprite.y > scene.screenHeight() / 2) {
-            vy = -50
-        } else {
-            vy = 50
-        }
-        if (newSprite.x > scene.screenWidth() / 2) {
-            vx = -50
-        } else {
-            vx = 50
-        }
-    }
-})
-forever(function () {
-    if (levelCtr == curLevel) {
+game.onUpdate(function () {
+    if (killCtr >= levelCtr * 5) {
         goNextLevel()
+    } else {
+        if (bCircleCreated) {
+            if (newSprite.y > scene.screenHeight() / 2) {
+                vy = -50
+            } else {
+                vy = 50
+            }
+            if (newSprite.x > scene.screenWidth() / 2) {
+                vx = -50
+            } else {
+                vx = 50
+            }
+        }
+        if (Math.percentChance(createPct) && !(bCreated4)) {
+            mySprite6 = sprites.create(assets.image`Enemy2`, SpriteKind.Enemy)
+            mySprite6.setPosition(80, 88)
+            bCreated4 = 1
+        }
+        if (Math.percentChance(pulsePct) && bCreated4 && !(bShot4)) {
+            mySprite3 = sprites.create(assets.image`Pulse`, SpriteKind.Food)
+            mySprite3.setPosition(80, 120)
+            mySprite3.setVelocity(0, -1 * pulseV)
+            mySprite3.setFlag(SpriteFlag.AutoDestroy, true)
+            bShot4 = 1
+        }
+        if (Math.percentChance(createPct) && !(bCreated3)) {
+            mySprite5 = sprites.create(assets.image`Enemy1`, SpriteKind.Enemy)
+            mySprite5.setPosition(128, 60)
+            bCreated3 = 1
+        }
+        if (Math.percentChance(pulsePct) && bCreated3 && !(bShot3)) {
+            mySprite3 = sprites.create(assets.image`Pulse`, SpriteKind.Food)
+            mySprite3.setPosition(160, 60)
+            mySprite3.setVelocity(-1 * pulseV, 0)
+            mySprite3.setFlag(SpriteFlag.AutoDestroy, true)
+            bShot3 = 1
+        }
+        if (Math.percentChance(createPct) && !(bCreated)) {
+            mySprite3 = sprites.create(assets.image`Enemy`, SpriteKind.Enemy)
+            mySprite3.setPosition(32, 60)
+            bCreated = 1
+        }
+        if (Math.percentChance(pulsePct) && bCreated && !(bShot)) {
+            mySprite2 = sprites.create(assets.image`Pulse`, SpriteKind.Food)
+            mySprite2.setPosition(0, 60)
+            mySprite2.setVelocity(pulseV, 0)
+            mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
+            bShot = 1
+        }
+        if (Math.percentChance(createPct) && !(bCreated2)) {
+            mySprite4 = sprites.create(assets.image`Enemy0`, SpriteKind.Enemy)
+            mySprite4.setPosition(80, 32)
+            bCreated2 = 1
+        }
+        if (Math.percentChance(pulsePct) && bCreated2 && !(bShot2)) {
+            mySprite3 = sprites.create(assets.image`Pulse`, SpriteKind.Food)
+            mySprite3.setPosition(80, 0)
+            mySprite3.setVelocity(0, pulseV)
+            mySprite3.setFlag(SpriteFlag.AutoDestroy, true)
+            bShot2 = 1
+        }
     }
 })
 game.onUpdateInterval(500, function () {
