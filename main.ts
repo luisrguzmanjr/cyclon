@@ -205,11 +205,16 @@ function resetVariables () {
     sprites.destroyAllSpritesOfKind(SpriteKind.Armor)
     sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
     sprites.destroyAllSpritesOfKind(SpriteKind.Marker)
+    sprites.destroyAllSpritesOfKind(SpriteKind.TopMarker)
+    sprites.destroyAllSpritesOfKind(SpriteKind.BotMarker)
+    sprites.destroyAllSpritesOfKind(SpriteKind.LeftMarker)
+    sprites.destroyAllSpritesOfKind(SpriteKind.RightMarker)
     sprites.destroyAllSpritesOfKind(SpriteKind.TopLeftMarker)
     sprites.destroyAllSpritesOfKind(SpriteKind.TopRightMarker)
     sprites.destroyAllSpritesOfKind(SpriteKind.BotLeftMarker)
     sprites.destroyAllSpritesOfKind(SpriteKind.BotRightMarker)
     statusbar.value = 100
+    killCtr = 0
     bCreated = 0
     bCreated2 = 0
     bCreated3 = 0
@@ -238,9 +243,9 @@ function resetLevel () {
     displayLife()
     doExplosion()
     if (Lifectr > 0) {
-        game.splash("Replay Wave! Level:", curLevel)
+        game.splash("Replay Wave! Level:", levelCtr)
     } else {
-        game.splash("Good game! Try again!", curLevel)
+        game.splash("Good game! Try again!")
         game.over(false)
     }
     resetVariables()
@@ -307,17 +312,16 @@ controller.B.onEvent(ControllerButtonEvent.Released, function () {
 })
 function goNextLevel () {
     killCtr = 0
-    curLevel += 1
+    levelCtr += 1
     Lifectr += 1
     textSprite.destroy()
     displayLife()
-    game.splash("Next Wave! Level:", curLevel)
+    game.splash("Next Wave! Level:", levelCtr)
     levelCtr += 1
     createPct += createPct * 10
     pulsePct += pulsePct * 10
     gameTimer += -100
-    killCtr += 1
-    if (curLevel >= 5) {
+    if (levelCtr >= 5) {
         bCircle = 1
     }
     resetVariables()
@@ -393,7 +397,7 @@ let bBotLeft = 0
 let statusBarPct = 0
 let createPct = 0
 let pulsePct = 0
-let curLevel = 0
+let levelCtr = 0
 let killCtr = 0
 let laserV = 0
 let newSprite: Sprite = null
@@ -413,8 +417,7 @@ projectile = sprites.createProjectileFromSprite(assets.image`bomb`, newSprite, 0
 laserV = 300
 let pulseV = 150
 killCtr = 0
-let levelCtr = 1
-curLevel = 1
+levelCtr = 1
 pulsePct = 1e-20
 createPct = 1e-20
 let gameTimer = 10000
