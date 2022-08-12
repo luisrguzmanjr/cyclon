@@ -112,9 +112,10 @@ function doExplosion () {
         mySprite2 = sprites.create(assets.image`CycloneCorners`, SpriteKind.TopLeftMarker)
     }
     if (bArmor) {
-        mySprite2 = sprites.create(assets.image`myImage0`, SpriteKind.Player)
+        mySprite10 = sprites.create(assets.image`myImage0`, SpriteKind.Player)
     }
     mySprite2.setVelocity(-50, -50)
+    mySprite10.setVelocity(-50, -50)
     if (bTopHit) {
         mySprite3 = sprites.create(assets.image`Cyclone6`, SpriteKind.Player)
     } else {
@@ -127,9 +128,10 @@ function doExplosion () {
         mySprite4 = sprites.create(assets.image`CycloneCorners0`, SpriteKind.TopRightMarker)
     }
     if (bArmor) {
-        mySprite4 = sprites.create(assets.image`myImage2`, SpriteKind.Player)
+        mySprite11 = sprites.create(assets.image`myImage2`, SpriteKind.Player)
     }
     mySprite4.setVelocity(50, -50)
+    mySprite11.setVelocity(50, -50)
     if (bLeftHit) {
         mySprite5 = sprites.create(assets.image`Cyclone4`, SpriteKind.Player)
     } else {
@@ -148,9 +150,10 @@ function doExplosion () {
         mySprite7 = sprites.create(assets.image`CycloneCorners1`, SpriteKind.BotLeftMarker)
     }
     if (bArmor) {
-        mySprite7 = sprites.create(assets.image`myImage1`, SpriteKind.Player)
+        mySprite12 = sprites.create(assets.image`myImage1`, SpriteKind.Player)
     }
     mySprite7.setVelocity(-50, 50)
+    mySprite12.setVelocity(-50, 50)
     if (bBottomHit) {
         mySprite8 = sprites.create(assets.image`Cyclone7`, SpriteKind.Player)
     } else {
@@ -163,9 +166,10 @@ function doExplosion () {
         mySprite9 = sprites.create(assets.image`CycloneCorners2`, SpriteKind.BotRightMarker)
     }
     if (bArmor) {
-        mySprite9 = sprites.create(assets.image`myImage`, SpriteKind.Player)
+        mySprite13 = sprites.create(assets.image`myImage`, SpriteKind.Player)
     }
     mySprite9.setVelocity(50, 50)
+    mySprite13.setVelocity(50, 50)
     pause(1000)
 }
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -207,7 +211,7 @@ sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.heroProjectile, function (s
     statusbar.value += 1
 })
 function displayLevel () {
-    textSprite2 = textsprite.create("Level " + levelCtr.toString())
+    textSprite2 = textsprite.create("Level " + convertToText(levelCtr))
     textSprite2.setOutline(1, 6)
     textSprite2.setBorder(1, 6, 1)
     textSprite2.setStayInScreen(true)
@@ -366,7 +370,7 @@ function circleEnemy () {
     newSprite.setFlag(SpriteFlag.AutoDestroy, true)
 }
 function displayLife () {
-    textSprite = textsprite.create("Lives " + Lifectr.toString())
+    textSprite = textsprite.create("Lives " + convertToText(Lifectr))
     textSprite.setOutline(1, 6)
     textSprite.setBorder(1, 6, 1)
     textSprite.setStayInScreen(true)
@@ -403,14 +407,18 @@ let bCreated2 = 0
 let bCreated = 0
 let textSprite2: TextSprite = null
 let bCircleCreated = 0
+let mySprite13: Sprite = null
 let mySprite9: Sprite = null
 let bBotRight = 0
 let mySprite8: Sprite = null
 let bBottomHit = 0
+let mySprite12: Sprite = null
 let mySprite6: Sprite = null
 let mySprite5: Sprite = null
 let bLeftHit = 0
+let mySprite11: Sprite = null
 let mySprite4: Sprite = null
+let mySprite10: Sprite = null
 let bTopLeft = 0
 let mySprite7: Sprite = null
 let bArmor = 0
@@ -435,10 +443,11 @@ let levelCtr = 0
 let Lifectr = 0
 game.splash("CYCLON", "Invasion!")
 info.setScore(0)
+Lifectr = 3
+levelCtr = 1
 statusbar = statusbars.create(48, 4, StatusBarKind.Health)
 statusbar.max = 100
 statusbar.setPosition(24, 18)
-Lifectr = 3
 displayLife()
 displayLevel()
 bCircle = 0
@@ -446,7 +455,6 @@ projectile = sprites.createProjectileFromSprite(assets.image`bomb`, newSprite, 0
 laserV = 300
 let pulseV = 150
 killCtr = 0
-levelCtr = 1
 pulsePct = 1e-20
 createPct = 1e-20
 let gameTimer = 10000
