@@ -1,6 +1,6 @@
 namespace SpriteKind {
     export const CircleEnemy = SpriteKind.create()
-    export const heroProjectile = SpriteKind.create()
+    export const HeroProjectile = SpriteKind.create()
     export const Armor = SpriteKind.create()
     export const Weapon = SpriteKind.create()
     export const Marker = SpriteKind.create()
@@ -24,21 +24,17 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.BotLeftMarker, function (spr
         }
     }
 })
-sprites.onOverlap(SpriteKind.heroProjectile, SpriteKind.Food, function (sprite, otherSprite) {
-    otherSprite.destroy()
-    sprite.destroy()
-    info.changeScoreBy(10)
-    statusbar.value += 1
-})
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!(controller.down.isPressed()) && (!(controller.right.isPressed()) && !(controller.left.isPressed()))) {
-        sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
-        mySprite3 = sprites.create(assets.image`Cyclone0`, SpriteKind.Weapon)
-        mySprite2 = sprites.create(assets.image`laser0`, SpriteKind.heroProjectile)
-        mySprite2.setVelocity(0, -1 * laserV)
-        mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
-        statusbar.value += statusBarPct
-        music.pewPew.play()
+    if (!(bDisabled)) {
+        if (!(controller.down.isPressed()) && (!(controller.right.isPressed()) && !(controller.left.isPressed()))) {
+            sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
+            mySprite3 = sprites.create(assets.image`Cyclone0`, SpriteKind.Weapon)
+            mySprite2 = sprites.create(assets.image`laser0`, SpriteKind.HeroProjectile)
+            mySprite2.setVelocity(0, -1 * laserV)
+            mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
+            statusbar.value += statusBarPct
+            music.pewPew.play()
+        }
     }
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.TopRightMarker, function (sprite, otherSprite) {
@@ -71,29 +67,13 @@ sprites.onOverlap(SpriteKind.Food, SpriteKind.TopMarker, function (sprite, other
     }
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    armorSprite = sprites.create(assets.image`Armor`, SpriteKind.Armor)
-    bArmor = 1
+    if (!(bDisabled)) {
+        bArmor = 1
+        armorSprite = sprites.create(assets.image`Armor`, SpriteKind.Armor)
+    }
 })
-function createTestMarkers (x: number, y: number, r: number) {
-    mySprite7 = sprites.create(assets.image`Marker2`, SpriteKind.Marker)
-    mySprite7.setPosition(120, 30)
-    mySprite7 = sprites.create(assets.image`Marker3`, SpriteKind.Marker)
-    mySprite7.setPosition(120, 90)
-    mySprite7 = sprites.create(assets.image`Marker4`, SpriteKind.Marker)
-    mySprite7.setPosition(40, 30)
-    mySprite7 = sprites.create(assets.image`Marker`, SpriteKind.Marker)
-    mySprite7.setPosition(40, 90)
-    mySprite = sprites.create(assets.image`CycloneCorners`, SpriteKind.TopLeftMarker)
-    mySprite = sprites.create(assets.image`CycloneCorners0`, SpriteKind.TopRightMarker)
-    mySprite = sprites.create(assets.image`CycloneCorners1`, SpriteKind.BotLeftMarker)
-    mySprite = sprites.create(assets.image`CycloneCorners2`, SpriteKind.BotRightMarker)
-    mySprite = sprites.create(assets.image`Cyclone`, SpriteKind.Player)
-    mySprite = sprites.create(assets.image`Cyclone8`, SpriteKind.TopMarker)
-    mySprite = sprites.create(assets.image`Cyclone9`, SpriteKind.BotMarker)
-    mySprite = sprites.create(assets.image`Cyclone10`, SpriteKind.LeftMarker)
-    mySprite = sprites.create(assets.image`Cyclone11`, SpriteKind.RightMarker)
-}
 function doExplosion () {
+    bDisabled = 1
     sprites.destroyAllSpritesOfKind(SpriteKind.Player)
     sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
     sprites.destroyAllSpritesOfKind(SpriteKind.Armor)
@@ -113,9 +93,9 @@ function doExplosion () {
     }
     if (bArmor) {
         mySprite10 = sprites.create(assets.image`myImage0`, SpriteKind.Player)
+        mySprite10.setVelocity(-50, -50)
     }
     mySprite2.setVelocity(-50, -50)
-    mySprite10.setVelocity(-50, -50)
     if (bTopHit) {
         mySprite3 = sprites.create(assets.image`Cyclone6`, SpriteKind.Player)
     } else {
@@ -129,9 +109,9 @@ function doExplosion () {
     }
     if (bArmor) {
         mySprite11 = sprites.create(assets.image`myImage2`, SpriteKind.Player)
+        mySprite11.setVelocity(50, -50)
     }
     mySprite4.setVelocity(50, -50)
-    mySprite11.setVelocity(50, -50)
     if (bLeftHit) {
         mySprite5 = sprites.create(assets.image`Cyclone4`, SpriteKind.Player)
     } else {
@@ -151,9 +131,9 @@ function doExplosion () {
     }
     if (bArmor) {
         mySprite12 = sprites.create(assets.image`myImage1`, SpriteKind.Player)
+        mySprite12.setVelocity(-50, 50)
     }
     mySprite7.setVelocity(-50, 50)
-    mySprite12.setVelocity(-50, 50)
     if (bBottomHit) {
         mySprite8 = sprites.create(assets.image`Cyclone7`, SpriteKind.Player)
     } else {
@@ -167,20 +147,29 @@ function doExplosion () {
     }
     if (bArmor) {
         mySprite13 = sprites.create(assets.image`myImage`, SpriteKind.Player)
+        mySprite13.setVelocity(50, 50)
     }
     mySprite9.setVelocity(50, 50)
-    mySprite13.setVelocity(50, 50)
     pause(1000)
 }
+sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.HeroProjectile, function (sprite, otherSprite) {
+    sprite.destroy()
+    info.changeScoreBy(100)
+    killCtr += 1
+    bCircleCreated = 0
+    statusbar.value += 1
+})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!(controller.up.isPressed()) && (!(controller.down.isPressed()) && !(controller.right.isPressed()))) {
-        sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
-        mySprite3 = sprites.create(assets.image`Cyclone3`, SpriteKind.Weapon)
-        mySprite2 = sprites.create(assets.image`laser1`, SpriteKind.heroProjectile)
-        mySprite2.setVelocity(-1 * laserV, 0)
-        mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
-        statusbar.value += statusBarPct
-        music.pewPew.play()
+    if (!(bDisabled)) {
+        if (!(controller.up.isPressed()) && (!(controller.down.isPressed()) && !(controller.right.isPressed()))) {
+            sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
+            mySprite3 = sprites.create(assets.image`Cyclone3`, SpriteKind.Weapon)
+            mySprite2 = sprites.create(assets.image`laser1`, SpriteKind.HeroProjectile)
+            mySprite2.setVelocity(-1 * laserV, 0)
+            mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
+            statusbar.value += statusBarPct
+            music.pewPew.play()
+        }
     }
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.TopLeftMarker, function (sprite, otherSprite) {
@@ -203,13 +192,6 @@ sprites.onOverlap(SpriteKind.Food, SpriteKind.LeftMarker, function (sprite, othe
         resetLevel()
     }
 })
-sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.heroProjectile, function (sprite, otherSprite) {
-    sprite.destroy()
-    info.changeScoreBy(100)
-    killCtr += 1
-    bCircleCreated = 0
-    statusbar.value += 1
-})
 function displayLevel () {
     textSprite2 = textsprite.create("Level " + convertToText(levelCtr))
     textSprite2.setOutline(1, 6)
@@ -220,13 +202,32 @@ function displayLevel () {
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Armor, function (sprite, otherSprite) {
     sprite.destroy()
 })
+function createMarkers (x: number, y: number, r: number) {
+    mySprite7 = sprites.create(assets.image`Marker2`, SpriteKind.Marker)
+    mySprite7.setPosition(120, 30)
+    mySprite7 = sprites.create(assets.image`Marker3`, SpriteKind.Marker)
+    mySprite7.setPosition(120, 90)
+    mySprite7 = sprites.create(assets.image`Marker4`, SpriteKind.Marker)
+    mySprite7.setPosition(40, 30)
+    mySprite7 = sprites.create(assets.image`Marker`, SpriteKind.Marker)
+    mySprite7.setPosition(40, 90)
+    mySprite = sprites.create(assets.image`CycloneCorners`, SpriteKind.TopLeftMarker)
+    mySprite = sprites.create(assets.image`CycloneCorners0`, SpriteKind.TopRightMarker)
+    mySprite = sprites.create(assets.image`CycloneCorners1`, SpriteKind.BotLeftMarker)
+    mySprite = sprites.create(assets.image`CycloneCorners2`, SpriteKind.BotRightMarker)
+    mySprite = sprites.create(assets.image`Cyclone`, SpriteKind.Player)
+    mySprite = sprites.create(assets.image`Cyclone8`, SpriteKind.TopMarker)
+    mySprite = sprites.create(assets.image`Cyclone9`, SpriteKind.BotMarker)
+    mySprite = sprites.create(assets.image`Cyclone10`, SpriteKind.LeftMarker)
+    mySprite = sprites.create(assets.image`Cyclone11`, SpriteKind.RightMarker)
+}
 function resetVariables () {
     sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
     sprites.destroyAllSpritesOfKind(SpriteKind.CircleEnemy)
     sprites.destroyAllSpritesOfKind(SpriteKind.Player)
     sprites.destroyAllSpritesOfKind(SpriteKind.Food)
     sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
-    sprites.destroyAllSpritesOfKind(SpriteKind.heroProjectile)
+    sprites.destroyAllSpritesOfKind(SpriteKind.HeroProjectile)
     sprites.destroyAllSpritesOfKind(SpriteKind.Armor)
     sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
     sprites.destroyAllSpritesOfKind(SpriteKind.Marker)
@@ -239,6 +240,7 @@ function resetVariables () {
     sprites.destroyAllSpritesOfKind(SpriteKind.BotLeftMarker)
     sprites.destroyAllSpritesOfKind(SpriteKind.BotRightMarker)
     statusbar.value = 100
+    bDisabled = 0
     killCtr = 0
     bCreated = 0
     bCreated2 = 0
@@ -258,11 +260,11 @@ function resetVariables () {
     bTopRight = 0
     bBotLeft = 0
     bBotRight = 0
-    createTestMarkers(scene.screenWidth(), scene.screenHeight(), 2)
+    createMarkers(scene.screenWidth(), scene.screenHeight(), 2)
 }
 function resetLevel () {
     cubicbird.destroyAllSpriteOfKind(SpriteKind.Food)
-    cubicbird.destroyAllSpriteOfKind(SpriteKind.heroProjectile)
+    cubicbird.destroyAllSpriteOfKind(SpriteKind.HeroProjectile)
     Lifectr += -1
     textSprite.destroy()
     textSprite2.destroy()
@@ -278,20 +280,30 @@ function resetLevel () {
     resetVariables()
 }
 controller.B.onEvent(ControllerButtonEvent.Repeated, function () {
-    statusbar.value += statusBarPct / 4
+    if (!(bDisabled)) {
+        statusbar.value += statusBarPct / 4
+    }
 })
 statusbars.onZero(StatusBarKind.Health, function (status) {
     resetLevel()
 })
+sprites.onOverlap(SpriteKind.HeroProjectile, SpriteKind.Projectile, function (sprite, otherSprite) {
+    otherSprite.destroy()
+    sprite.destroy()
+    info.changeScoreBy(50)
+    statusbar.value += 1
+})
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!(controller.up.isPressed()) && (!(controller.down.isPressed()) && !(controller.left.isPressed()))) {
-        sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
-        mySprite3 = sprites.create(assets.image`Cyclone1`, SpriteKind.Weapon)
-        mySprite2 = sprites.create(assets.image`laser1`, SpriteKind.heroProjectile)
-        mySprite2.setVelocity(laserV, 0)
-        mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
-        statusbar.value += statusBarPct
-        music.pewPew.play()
+    if (!(bDisabled)) {
+        if (!(controller.up.isPressed()) && (!(controller.down.isPressed()) && !(controller.left.isPressed()))) {
+            sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
+            mySprite3 = sprites.create(assets.image`Cyclone1`, SpriteKind.Weapon)
+            mySprite2 = sprites.create(assets.image`laser1`, SpriteKind.HeroProjectile)
+            mySprite2.setVelocity(laserV, 0)
+            mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
+            statusbar.value += statusBarPct
+            music.pewPew.play()
+        }
     }
 })
 sprites.onOverlap(SpriteKind.Food, SpriteKind.BotMarker, function (sprite, otherSprite) {
@@ -302,16 +314,6 @@ sprites.onOverlap(SpriteKind.Food, SpriteKind.BotMarker, function (sprite, other
     } else {
         resetLevel()
     }
-})
-sprites.onOverlap(SpriteKind.Enemy, SpriteKind.heroProjectile, function (sprite, otherSprite) {
-    sprite.destroy()
-    info.changeScoreBy(50)
-    killCtr += 1
-    bCreated = 0
-    bCreated2 = 0
-    bCreated3 = 0
-    bCreated4 = 0
-    statusbar.value += 1
 })
 sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.Marker, function (sprite, otherSprite) {
     if (Math.percentChance(5)) {
@@ -324,14 +326,16 @@ sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.Marker, function (sprite, o
     }
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!(controller.up.isPressed()) && (!(controller.right.isPressed()) && !(controller.left.isPressed()))) {
-        sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
-        mySprite3 = sprites.create(assets.image`Cyclone2`, SpriteKind.Weapon)
-        mySprite2 = sprites.create(assets.image`laser0`, SpriteKind.heroProjectile)
-        mySprite2.setVelocity(0, laserV)
-        mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
-        statusbar.value += statusBarPct
-        music.pewPew.play()
+    if (!(bDisabled)) {
+        if (!(controller.up.isPressed()) && (!(controller.right.isPressed()) && !(controller.left.isPressed()))) {
+            sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
+            mySprite3 = sprites.create(assets.image`Cyclone2`, SpriteKind.Weapon)
+            mySprite2 = sprites.create(assets.image`laser0`, SpriteKind.HeroProjectile)
+            mySprite2.setVelocity(0, laserV)
+            mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
+            statusbar.value += statusBarPct
+            music.pewPew.play()
+        }
     }
 })
 controller.B.onEvent(ControllerButtonEvent.Released, function () {
@@ -376,10 +380,20 @@ function displayLife () {
     textSprite.setStayInScreen(true)
     textSprite.setPosition(24, 8)
 }
-sprites.onOverlap(SpriteKind.heroProjectile, SpriteKind.Projectile, function (sprite, otherSprite) {
+sprites.onOverlap(SpriteKind.HeroProjectile, SpriteKind.Food, function (sprite, otherSprite) {
     otherSprite.destroy()
     sprite.destroy()
+    info.changeScoreBy(10)
+    statusbar.value += 1
+})
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.HeroProjectile, function (sprite, otherSprite) {
+    sprite.destroy()
     info.changeScoreBy(50)
+    killCtr += 1
+    bCreated = 0
+    bCreated2 = 0
+    bCreated3 = 0
+    bCreated4 = 0
     statusbar.value += 1
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.BotRightMarker, function (sprite, otherSprite) {
@@ -413,6 +427,7 @@ let bBotRight = 0
 let mySprite8: Sprite = null
 let bBottomHit = 0
 let mySprite12: Sprite = null
+let mySprite7: Sprite = null
 let mySprite6: Sprite = null
 let mySprite5: Sprite = null
 let bLeftHit = 0
@@ -420,14 +435,14 @@ let mySprite11: Sprite = null
 let mySprite4: Sprite = null
 let mySprite10: Sprite = null
 let bTopLeft = 0
-let mySprite7: Sprite = null
-let bArmor = 0
 let armorSprite: Sprite = null
+let bArmor = 0
 let bTopHit = 0
 let bRightHit = 0
 let bTopRight = 0
 let mySprite2: Sprite = null
 let mySprite3: Sprite = null
+let bDisabled = 0
 let mySprite: Sprite = null
 let bBotLeft = 0
 let statusBarPct = 0
@@ -459,7 +474,7 @@ pulsePct = 1e-20
 createPct = 1e-20
 let gameTimer = 10000
 statusBarPct += -1
-createTestMarkers(scene.screenWidth(), scene.screenHeight(), 2)
+createMarkers(scene.screenWidth(), scene.screenHeight(), 2)
 game.onUpdateInterval(gameTimer, function () {
     if (bShot) {
         timer.after(2000, function () {
