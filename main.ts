@@ -101,11 +101,12 @@ function doExplosion () {
         mySprite2 = sprites.create(assets.image`CycloneCorner`, SpriteKind.Player)
     } else {
         mySprite2 = sprites.create(assets.image`CycloneCorners`, SpriteKind.TopLeftMarker)
+        if (bArmor) {
+            mySprite10 = sprites.create(assets.image`myImage0`, SpriteKind.Player)
+            mySprite10.setVelocity(-50, -50)
+        }
     }
-    if (bArmor) {
-        mySprite10 = sprites.create(assets.image`myImage0`, SpriteKind.Player)
-        mySprite10.setVelocity(-50, -50)
-    }
+
     mySprite2.setVelocity(-50, -50)
     if (bTopHit) {
         mySprite3 = sprites.create(assets.image`Cyclone6`, SpriteKind.Player)
@@ -117,10 +118,10 @@ function doExplosion () {
         mySprite4 = sprites.create(assets.image`CycloneCorner0`, SpriteKind.Player)
     } else {
         mySprite4 = sprites.create(assets.image`CycloneCorners0`, SpriteKind.TopRightMarker)
-    }
-    if (bArmor) {
-        mySprite11 = sprites.create(assets.image`myImage2`, SpriteKind.Player)
-        mySprite11.setVelocity(50, -50)
+        if (bArmor) {
+            mySprite11 = sprites.create(assets.image`myImage2`, SpriteKind.Player)
+            mySprite11.setVelocity(50, -50)
+        }
     }
     mySprite4.setVelocity(50, -50)
     if (bLeftHit) {
@@ -139,10 +140,10 @@ function doExplosion () {
         mySprite7 = sprites.create(assets.image`CycloneCorner1`, SpriteKind.Player)
     } else {
         mySprite7 = sprites.create(assets.image`CycloneCorners1`, SpriteKind.BotLeftMarker)
-    }
-    if (bArmor) {
-        mySprite12 = sprites.create(assets.image`myImage1`, SpriteKind.Player)
-        mySprite12.setVelocity(-50, 50)
+        if (bArmor) {
+            mySprite12 = sprites.create(assets.image`myImage1`, SpriteKind.Player)
+            mySprite12.setVelocity(-50, 50)
+        }
     }
     mySprite7.setVelocity(-50, 50)
     if (bBottomHit) {
@@ -155,10 +156,10 @@ function doExplosion () {
         mySprite9 = sprites.create(assets.image`CycloneCorner2`, SpriteKind.Player)
     } else {
         mySprite9 = sprites.create(assets.image`CycloneCorners2`, SpriteKind.BotRightMarker)
-    }
-    if (bArmor) {
-        mySprite13 = sprites.create(assets.image`myImage`, SpriteKind.Player)
-        mySprite13.setVelocity(50, 50)
+        if (bArmor) {
+            mySprite13 = sprites.create(assets.image`myImage`, SpriteKind.Player)
+            mySprite13.setVelocity(50, 50)
+        }
     }
     mySprite9.setVelocity(50, 50)
     pause(1000)
