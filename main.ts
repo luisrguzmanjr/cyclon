@@ -69,7 +69,18 @@ sprites.onOverlap(SpriteKind.Food, SpriteKind.TopMarker, function (sprite, other
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (!(bDisabled)) {
         bArmor = 1
-        armorSprite = sprites.create(assets.image`Armor`, SpriteKind.Armor)
+        if (!(bBotLeft)) {
+            armorSprite = sprites.create(assets.image`myImage1`, SpriteKind.Armor)
+        }
+        if (!(bBotRight)) {
+            armorSprite = sprites.create(assets.image`myImage`, SpriteKind.Armor)
+        }
+        if (!(bTopLeft)) {
+            armorSprite = sprites.create(assets.image`myImage0`, SpriteKind.Armor)
+        }
+        if (!(bTopRight)) {
+            armorSprite = sprites.create(assets.image`myImage2`, SpriteKind.Armor)
+        }
     }
 })
 function doExplosion () {
@@ -423,7 +434,6 @@ let textSprite2: TextSprite = null
 let bCircleCreated = 0
 let mySprite13: Sprite = null
 let mySprite9: Sprite = null
-let bBotRight = 0
 let mySprite8: Sprite = null
 let bBottomHit = 0
 let mySprite12: Sprite = null
@@ -435,6 +445,7 @@ let mySprite11: Sprite = null
 let mySprite4: Sprite = null
 let mySprite10: Sprite = null
 let bTopLeft = 0
+let bBotRight = 0
 let armorSprite: Sprite = null
 let bArmor = 0
 let bTopHit = 0
