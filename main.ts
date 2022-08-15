@@ -651,14 +651,8 @@ function circleSpriteAt2(sprite: Sprite, x: number, y: number, r: number, rx: nu
     
     game.onUpdateInterval(interval, () => {
 
-        //let currentRadius = sprite.data['currentRadius'];
-        let time = game.runtime() / 10000
+        let time = game.runtime() / 20000
         sprite.x = x + r * Math.cos(velocity * time)  ;
         sprite.y = y + r * Math.sin(velocity * time);
-        //sprite.setPosition(sprite.x, sprite.y)
-        //sprite.vx = Math.cos(currentRadius) * velocity;
-        //sprite.vy = Math.sin(currentRadius) * velocity;
-
-        //sprite.data['currentRadius'] = currentRadius + Math.PI / 180
     })
 }
