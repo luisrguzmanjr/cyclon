@@ -276,7 +276,7 @@ function resetVariables () {
 function resetLevel () {
     cubicbird.destroyAllSpriteOfKind(SpriteKind.Food)
     cubicbird.destroyAllSpriteOfKind(SpriteKind.HeroProjectile)
-    //Lifectr += -1
+    Lifectr += -1
     textSprite.destroy()
     textSprite2.destroy()
     displayLife()
@@ -373,15 +373,6 @@ function goNextLevel () {
 }
 function circleEnemy () {
     newSprite = sprites.create(assets.image`circleEnemy`, SpriteKind.CircleEnemy)
-/*    
-    cubicbird.circleSpriteAt(
-    newSprite,
-    80,
-    55,
-    30,
-    25
-    )
-*/
     let quad = 0
     quad = randint(1, 4)
     if (quad == 1) {
