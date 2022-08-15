@@ -48,6 +48,16 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.TopRightMarker, function (sp
         }
     }
 })
+function circleSpriteAt2 (sprite: Sprite, x: number, y: number, r: number, rx: number, ry: number, velocity: number) {
+    sprite.x = x - rx
+    sprite.y = y - ry
+    interval = 30
+    game.onUpdateInterval(interval, () => {
+        let time = game.runtime() / 20000
+        sprite.x = x + r * Math.cos(velocity * time)  ;
+        sprite.y = y + r * Math.sin(velocity * time);
+    })
+}
 sprites.onOverlap(SpriteKind.Food, SpriteKind.RightMarker, function (sprite, otherSprite) {
     sprite.destroy()
     if (!(bRightHit)) {
@@ -373,51 +383,18 @@ function goNextLevel () {
 }
 function circleEnemy () {
     newSprite = sprites.create(assets.image`circleEnemy`, SpriteKind.CircleEnemy)
-    let quad = 0
     quad = randint(1, 4)
     if (quad == 1) {
-        circleSpriteAt2(
-            newSprite,
-            80,
-            60,
-            35,
-            40,
-            0,
-            20
-        )
+        circleSpriteAt2(newSprite, 80, 60, 35, 40, 0, 20)
     }
     if (quad == 2) {
-        circleSpriteAt2(
-            newSprite,
-            80,
-            60,
-            35,
-            -40,
-            0,
-            20
-        )
+        circleSpriteAt2(newSprite, 80, 60, 35, -40, 0, 20)
     }
     if (quad == 3) {
-        circleSpriteAt2(
-            newSprite,
-            80,
-            60,
-            35,
-            0,
-            30,
-            20
-        )
+        circleSpriteAt2(newSprite, 80, 60, 35, 0, 30, 20)
     }
     if (quad == 4) {
-        circleSpriteAt2(
-            newSprite,
-            80,
-            60,
-            35,
-            0,
-            -30,
-            20
-        )
+        circleSpriteAt2(newSprite, 80, 60, 35, 0, -30, 20)
     }
     vx = 0
     vy = 0
@@ -457,6 +434,7 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.BotRightMarker, function (sp
         }
     }
 })
+let quad = 0
 let vy = 0
 let vx = 0
 let textSprite: TextSprite = null
@@ -489,6 +467,7 @@ let armorSprite: Sprite = null
 let bArmor = 0
 let bTopHit = 0
 let bRightHit = 0
+let interval = 0
 let bTopRight = 0
 let mySprite2: Sprite = null
 let mySprite3: Sprite = null
@@ -626,14 +605,3 @@ game.onUpdateInterval(500, function () {
         }
     }
 })
-
-function circleSpriteAt2(sprite: Sprite, x: number, y: number, r: number, rx: number, ry: number, velocity: number) {
-    sprite.x = x - rx;
-    sprite.y = y - ry;
-    let interval = 30
-    game.onUpdateInterval(interval, () => {
-        let time = game.runtime() / 20000
-        sprite.x = x + r * Math.cos(velocity * time)  ;
-        sprite.y = y + r * Math.sin(velocity * time);
-    })
-}
