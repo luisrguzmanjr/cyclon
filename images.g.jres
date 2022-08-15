@@ -99,26 +99,6 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "CycloneCorners2"
     },
-    "cA;POXdMF|K#oP$[AK)-": {
-        "data": "hwQQABAAAAD//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w==",
-        "mimeType": "image/x-mkcd-f4",
-        "displayName": "Marker"
-    },
-    "lAoA)yvMNjQz{uGPj5XG": {
-        "data": "hwQQABAAAAD//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w==",
-        "mimeType": "image/x-mkcd-f4",
-        "displayName": "Marker2"
-    },
-    "gE{xp;OhrYQbR$4TKL}I": {
-        "data": "hwQQABAAAAD//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w==",
-        "mimeType": "image/x-mkcd-f4",
-        "displayName": "Marker3"
-    },
-    "{~}2WNtFizuY": {
-        "data": "hwQQABAAAAD//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////w==",
-        "mimeType": "image/x-mkcd-f4",
-        "displayName": "Marker4"
-    },
     "Mhp": {
         "data": "hwQEAAQAAACgCgAAyqQAAEqsAACgCgAA",
         "mimeType": "image/x-mkcd-f4",
@@ -189,10 +169,25 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "myImage0"
     },
-    "image13": {
-        "data": "hwQgACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8P//9AAAT///DwAAAAAAAPD/T0QAAET0/w8AAAAAAADw/0QEAABARP8PAAAAAAAA8E9EAAAAAET0DwAAAAAAAPBEBAAAAABARA8AAAAAAABAQwAAAAAAAEQEAAAAAAAA8AQAAAAAAABADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwBAAAAAAAAEAPAAAAAAAAQEQAAAAAAABEBAAAAAAAAPBEBAAAAABARA8AAAAAAADwT0QAAAAARPQPAAAAAAAA8P9EBAAAQET/DwAAAAAAAPD/T0QAAET0/w8AAAAAAADw///0AABP//8PAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+    "cA;POXdMF|K#oP$[AK)-": {
+        "data": "hwQQABAAAACIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiA==",
         "mimeType": "image/x-mkcd-f4",
-        "displayName": "Armor"
+        "displayName": "Marker"
+    },
+    "lAoA)yvMNjQz{uGPj5XG": {
+        "data": "hwQQABAAAACIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Marker2"
+    },
+    "gE{xp;OhrYQbR$4TKL}I": {
+        "data": "hwQQABAAAACIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Marker3"
+    },
+    "{~}2WNtFizuY": {
+        "data": "hwQQABAAAACIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Marker4"
     },
     "*": {
         "mimeType": "image/x-mkcd-f4",

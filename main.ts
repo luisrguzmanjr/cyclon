@@ -388,9 +388,9 @@ function circleEnemy () {
         circleSpriteAt2(
             newSprite,
             80,
-            55,
+            60,
             35,
-            35,
+            40,
             0,
             20
         )
@@ -399,9 +399,9 @@ function circleEnemy () {
         circleSpriteAt2(
             newSprite,
             80,
-            55,
+            60,
             35,
-            -35,
+            -40,
             0,
             20
         )
@@ -410,10 +410,10 @@ function circleEnemy () {
         circleSpriteAt2(
             newSprite,
             80,
-            55,
+            60,
             35,
             0,
-            35,
+            30,
             20
         )
     }
@@ -421,10 +421,10 @@ function circleEnemy () {
         circleSpriteAt2(
             newSprite,
             80,
-            55,
+            60,
             35,
             0,
-            -35,
+            -30,
             20
         )
     }
@@ -639,18 +639,8 @@ game.onUpdateInterval(500, function () {
 function circleSpriteAt2(sprite: Sprite, x: number, y: number, r: number, rx: number, ry: number, velocity: number) {
     sprite.x = x - rx;
     sprite.y = y - ry;
-    if (ry == 0) {
-        sprite.data['currentRadius'] = r;
-    }
-    else {
-        sprite.data['currentRadius'] = 0;
-    }
-    
-
-    let interval = 30  //Math.PI * r * 1000 / velocity / 180
-    
+    let interval = 30
     game.onUpdateInterval(interval, () => {
-
         let time = game.runtime() / 20000
         sprite.x = x + r * Math.cos(velocity * time)  ;
         sprite.y = y + r * Math.sin(velocity * time);

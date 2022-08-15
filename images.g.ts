@@ -639,82 +639,6 @@ namespace myImages {
 . . . . . . . . . . f . . . . . 
 . . . . . . . . . . . . . . . . 
 `;
-            case "cA;POXdMF|K#oP$[AK)-":
-            case "Marker":return img`
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-`;
-            case "lAoA)yvMNjQz{uGPj5XG":
-            case "Marker2":return img`
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-`;
-            case "gE{xp;OhrYQbR$4TKL}I":
-            case "Marker3":return img`
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-`;
-            case "{~}2WNtFizuY":
-            case "Marker4":return img`
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-f f f f f f f f f f f f f f f f 
-`;
             case "Mhp":
             case "bomb":return img`
 . a a . 
@@ -1097,40 +1021,81 @@ a 4 c a
 ................................
 ................................
 `;
-            case "image13":
-            case "Armor":return img`
-................................
-................................
-................................
-................................
-................................
-................................
-................................
-.......fffff4f....f4fffff.......
-.......ffff434....444ffff.......
-.......fff444......444fff.......
-.......ff444........444ff.......
-.......f444..........444f.......
-.......444............444.......
-.......f4..............4f.......
-................................
-................................
-................................
-................................
-.......f4..............4f.......
-.......444............444.......
-.......f444..........444f.......
-.......ff444........444ff.......
-.......fff444......444fff.......
-.......ffff444....444ffff.......
-.......fffff4f....f4fffff.......
-................................
-................................
-................................
-................................
-................................
-................................
-................................
+            case "cA;POXdMF|K#oP$[AK)-":
+            case "Marker":return img`
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+`;
+            case "lAoA)yvMNjQz{uGPj5XG":
+            case "Marker2":return img`
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+`;
+            case "gE{xp;OhrYQbR$4TKL}I":
+            case "Marker3":return img`
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+`;
+            case "{~}2WNtFizuY":
+            case "Marker4":return img`
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
 `;
         }
         return null;
