@@ -106,7 +106,6 @@ function doExplosion () {
             mySprite10.setVelocity(-50, -50)
         }
     }
-
     mySprite2.setVelocity(-50, -50)
     if (bTopHit) {
         mySprite3 = sprites.create(assets.image`Cyclone6`, SpriteKind.Player)
@@ -277,7 +276,7 @@ function resetVariables () {
 function resetLevel () {
     cubicbird.destroyAllSpriteOfKind(SpriteKind.Food)
     cubicbird.destroyAllSpriteOfKind(SpriteKind.HeroProjectile)
-    Lifectr += -1
+    //Lifectr += -1
     textSprite.destroy()
     textSprite2.destroy()
     displayLife()
@@ -374,6 +373,7 @@ function goNextLevel () {
 }
 function circleEnemy () {
     newSprite = sprites.create(assets.image`circleEnemy`, SpriteKind.CircleEnemy)
+/*    
     cubicbird.circleSpriteAt(
     newSprite,
     80,
@@ -381,6 +381,53 @@ function circleEnemy () {
     30,
     25
     )
+*/
+    let quad = 0
+    quad = randint(1, 4)
+    if (quad == 1) {
+        circleSpriteAt2(
+            newSprite,
+            80,
+            55,
+            35,
+            35,
+            0,
+            20
+        )
+    }
+    if (quad == 2) {
+        circleSpriteAt2(
+            newSprite,
+            80,
+            55,
+            35,
+            -35,
+            0,
+            20
+        )
+    }
+    if (quad == 3) {
+        circleSpriteAt2(
+            newSprite,
+            80,
+            55,
+            35,
+            0,
+            35,
+            20
+        )
+    }
+    if (quad == 4) {
+        circleSpriteAt2(
+            newSprite,
+            80,
+            55,
+            35,
+            0,
+            -35,
+            20
+        )
+    }
     vx = 0
     vy = 0
     newSprite.setFlag(SpriteFlag.AutoDestroy, true)
@@ -588,3 +635,30 @@ game.onUpdateInterval(500, function () {
         }
     }
 })
+
+function circleSpriteAt2(sprite: Sprite, x: number, y: number, r: number, rx: number, ry: number, velocity: number) {
+    sprite.x = x - rx;
+    sprite.y = y - ry;
+    if (ry == 0) {
+        sprite.data['currentRadius'] = r;
+    }
+    else {
+        sprite.data['currentRadius'] = 0;
+    }
+    
+
+    let interval = 30  //Math.PI * r * 1000 / velocity / 180
+    
+    game.onUpdateInterval(interval, () => {
+
+        //let currentRadius = sprite.data['currentRadius'];
+        let time = game.runtime() / 10000
+        sprite.x = x + r * Math.cos(velocity * time)  ;
+        sprite.y = y + r * Math.sin(velocity * time);
+        //sprite.setPosition(sprite.x, sprite.y)
+        //sprite.vx = Math.cos(currentRadius) * velocity;
+        //sprite.vy = Math.sin(currentRadius) * velocity;
+
+        //sprite.data['currentRadius'] = currentRadius + Math.PI / 180
+    })
+}
