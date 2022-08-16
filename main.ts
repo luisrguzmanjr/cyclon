@@ -284,8 +284,8 @@ function resetVariables () {
     createMarkers(scene.screenWidth(), scene.screenHeight(), 2)
 }
 function resetLevel () {
-    cubicbird.destroyAllSpriteOfKind(SpriteKind.Food)
-    cubicbird.destroyAllSpriteOfKind(SpriteKind.HeroProjectile)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Food)
+    sprites.destroyAllSpritesOfKind(SpriteKind.HeroProjectile)
     Lifectr += -1
     textSprite.destroy()
     textSprite2.destroy()
@@ -372,7 +372,6 @@ function goNextLevel () {
     displayLife()
     displayLevel()
     game.splash("Next Wave! Level:", levelCtr)
-    levelCtr += 1
     createPct += createPct * 10
     pulsePct += pulsePct * 10
     gameTimer += -100
