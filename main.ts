@@ -178,7 +178,7 @@ sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.HeroProjectile, function (s
     info.changeScoreBy(100)
     killCtr += 1
     bCircleCreated = 0
-    statusbar.value += 1
+    statusbar.value += 32
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (!(bDisabled)) {
@@ -260,9 +260,9 @@ function resetVariables () {
     sprites.destroyAllSpritesOfKind(SpriteKind.TopRightMarker)
     sprites.destroyAllSpritesOfKind(SpriteKind.BotLeftMarker)
     sprites.destroyAllSpritesOfKind(SpriteKind.BotRightMarker)
-    statusbar.value = 100
+    statusbar.value = 1280
     bDisabled = 0
-    killCtr = 0
+    //killCtr = 0
     bCreated = 0
     bCreated2 = 0
     bCreated3 = 0
@@ -302,7 +302,7 @@ function resetLevel () {
 }
 controller.B.onEvent(ControllerButtonEvent.Repeated, function () {
     if (!(bDisabled)) {
-        statusbar.value += statusBarPct / 4
+        statusbar.value += statusBarPct / 8
     }
 })
 statusbars.onZero(StatusBarKind.Health, function (status) {
@@ -312,7 +312,7 @@ sprites.onOverlap(SpriteKind.HeroProjectile, SpriteKind.Projectile, function (sp
     otherSprite.destroy()
     sprite.destroy()
     info.changeScoreBy(50)
-    statusbar.value += 1
+    statusbar.value += 32
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (!(bDisabled)) {
@@ -410,7 +410,7 @@ sprites.onOverlap(SpriteKind.HeroProjectile, SpriteKind.Food, function (sprite, 
     otherSprite.destroy()
     sprite.destroy()
     info.changeScoreBy(10)
-    statusbar.value += 1
+    statusbar.value += 32
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.HeroProjectile, function (sprite, otherSprite) {
     sprite.destroy()
@@ -420,7 +420,7 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.HeroProjectile, function (sprite,
     bCreated2 = 0
     bCreated3 = 0
     bCreated4 = 0
-    statusbar.value += 1
+    statusbar.value += 32
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.BotRightMarker, function (sprite, otherSprite) {
     sprite.destroy()
@@ -489,7 +489,8 @@ info.setScore(0)
 Lifectr = 3
 levelCtr = 1
 statusbar = statusbars.create(48, 4, StatusBarKind.Health)
-statusbar.max = 100
+statusbar.max = 1280
+statusbar.value = 1280
 statusbar.setPosition(24, 18)
 displayLife()
 displayLevel()
@@ -501,7 +502,7 @@ killCtr = 0
 pulsePct = 1e-20
 createPct = 1e-20
 let gameTimer = 10000
-statusBarPct += -1
+statusBarPct += -32
 createMarkers(scene.screenWidth(), scene.screenHeight(), 2)
 game.onUpdateInterval(gameTimer, function () {
     if (bShot) {
