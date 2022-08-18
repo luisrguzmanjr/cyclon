@@ -219,14 +219,14 @@ function displayCount() {
     textSprite3.setOutline(1, 6)
     textSprite3.setBorder(1, 6, 1)
     textSprite3.setStayInScreen(true)
-    textSprite3.setPosition(0, 112)
+    textSprite3.setPosition(0, 120)
 }
 function displayLevel() {
     textSprite2 = textsprite.create("Level " + convertToText(levelCtr))
     textSprite2.setOutline(1, 6)
     textSprite2.setBorder(1, 6, 1)
     textSprite2.setStayInScreen(true)
-    textSprite2.setPosition(135, 112)
+    textSprite2.setPosition(160, 120)
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Armor, function (sprite, otherSprite) {
     sprite.destroy()
@@ -424,7 +424,7 @@ function displayLife() {
     textSprite.setOutline(1, 6)
     textSprite.setBorder(1, 6, 1)
     textSprite.setStayInScreen(true)
-    textSprite.setPosition(24, 8)
+    textSprite.setPosition(0, 0)
 }
 sprites.onOverlap(SpriteKind.HeroProjectile, SpriteKind.Food, function (sprite, otherSprite) {
     otherSprite.destroy()
