@@ -17,7 +17,8 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.BotLeftMarker, function (spr
     sprite.destroy()
     if (!(controller.B.isPressed())) {
         if (!(bBotLeft)) {
-            mySprite = sprites.create(assets.image`CycloneCorner1`, SpriteKind.Player)
+            otherSprite.destroy()
+            mySprite = sprites.create(assets.image`CycloneCorner1`, SpriteKind.BotLeftMarker)
             bBotLeft = 1
         } else {
             resetLevel()
@@ -41,7 +42,8 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.TopRightMarker, function (sp
     sprite.destroy()
     if (!(controller.B.isPressed())) {
         if (!(bTopRight)) {
-            mySprite = sprites.create(assets.image`CycloneCorner0`, SpriteKind.Player)
+            otherSprite.destroy()
+            mySprite = sprites.create(assets.image`CycloneCorner0`, SpriteKind.TopRightMarker)
             bTopRight = 1
         } else {
             resetLevel()
@@ -61,7 +63,8 @@ function circleSpriteAt2(sprite: Sprite, x: number, y: number, r: number, rx: nu
 sprites.onOverlap(SpriteKind.Food, SpriteKind.RightMarker, function (sprite, otherSprite) {
     sprite.destroy()
     if (!(bRightHit)) {
-        mySprite = sprites.create(assets.image`Cyclone5`, SpriteKind.Player)
+        otherSprite.destroy()
+        mySprite = sprites.create(assets.image`Cyclone5`, SpriteKind.RightMarker)
         bRightHit = 1
     } else {
         resetLevel()
@@ -70,7 +73,8 @@ sprites.onOverlap(SpriteKind.Food, SpriteKind.RightMarker, function (sprite, oth
 sprites.onOverlap(SpriteKind.Food, SpriteKind.TopMarker, function (sprite, otherSprite) {
     sprite.destroy()
     if (!(bTopHit)) {
-        mySprite = sprites.create(assets.image`Cyclone6`, SpriteKind.Player)
+        otherSprite.destroy()
+        mySprite = sprites.create(assets.image`Cyclone6`, SpriteKind.TopMarker)
         bTopHit = 1
     } else {
         resetLevel()
@@ -198,7 +202,8 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.TopLeftMarker, function (spr
     sprite.destroy()
     if (!(controller.B.isPressed())) {
         if (!(bTopLeft)) {
-            mySprite = sprites.create(assets.image`CycloneCorner`, SpriteKind.Player)
+            otherSprite.destroy()
+            mySprite = sprites.create(assets.image`CycloneCorner`, SpriteKind.TopLeftMarker)
             bTopLeft = 1
         } else {
             resetLevel()
@@ -208,7 +213,8 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.TopLeftMarker, function (spr
 sprites.onOverlap(SpriteKind.Food, SpriteKind.LeftMarker, function (sprite, otherSprite) {
     sprite.destroy()
     if (!(bLeftHit)) {
-        mySprite = sprites.create(assets.image`Cyclone4`, SpriteKind.Player)
+        otherSprite.destroy()
+        mySprite = sprites.create(assets.image`Cyclone4`, SpriteKind.LeftMarker)
         bLeftHit = 1
     } else {
         resetLevel()
@@ -342,14 +348,15 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
 sprites.onOverlap(SpriteKind.Food, SpriteKind.BotMarker, function (sprite, otherSprite) {
     sprite.destroy()
     if (!(bBottomHit)) {
-        mySprite = sprites.create(assets.image`Cyclone7`, SpriteKind.Player)
+        otherSprite.destroy()
+        mySprite = sprites.create(assets.image`Cyclone7`, SpriteKind.BotMarker)
         bBottomHit = 1
     } else {
         resetLevel()
     }
 })
 sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.Marker, function (sprite, otherSprite) {
-    if (Math.percentChance(5)) {
+    if (Math.percentChance(circlePct)) {
         if (!(bShot5)) {
             projectile = sprites.createProjectileFromSprite(assets.image`bomb`, newSprite, vx, vy)
             projectile.follow(mySprite, 150)
@@ -448,7 +455,8 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.BotRightMarker, function (sp
     sprite.destroy()
     if (!(controller.B.isPressed())) {
         if (!(bBotRight)) {
-            mySprite = sprites.create(assets.image`CycloneCorner2`, SpriteKind.Player)
+            otherSprite.destroy()
+            mySprite = sprites.create(assets.image`CycloneCorner2`, SpriteKind.BotRightMarker)
             bBotRight = 1
         } else {
             resetLevel()
