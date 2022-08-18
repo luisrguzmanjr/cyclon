@@ -32,7 +32,7 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
             mySprite2 = sprites.create(assets.image`laser0`, SpriteKind.HeroProjectile)
             mySprite2.setVelocity(0, -1 * laserV)
             mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
-            statusbar.value += statusBarPct
+            statusbar.value += statusbarPct
             music.pewPew.play()
         }
     }
@@ -48,13 +48,13 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.TopRightMarker, function (sp
         }
     }
 })
-function circleSpriteAt2 (sprite: Sprite, x: number, y: number, r: number, rx: number, ry: number, velocity: number) {
+function circleSpriteAt2(sprite: Sprite, x: number, y: number, r: number, rx: number, ry: number, velocity: number) {
     sprite.x = x - rx
     sprite.y = y - ry
     interval = 30
     game.onUpdateInterval(interval, () => {
         let time = game.runtime() / 20000
-        sprite.x = x + r * Math.cos(velocity * time)  ;
+        sprite.x = x + r * Math.cos(velocity * time);
         sprite.y = y + r * Math.sin(velocity * time);
     })
 }
@@ -93,7 +93,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
-function doExplosion () {
+function doExplosion() {
     bDisabled = 1
     sprites.destroyAllSpritesOfKind(SpriteKind.Player)
     sprites.destroyAllSpritesOfKind(SpriteKind.Weapon)
@@ -188,7 +188,7 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
             mySprite2 = sprites.create(assets.image`laser1`, SpriteKind.HeroProjectile)
             mySprite2.setVelocity(-1 * laserV, 0)
             mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
-            statusbar.value += statusBarPct
+            statusbar.value += statusbarPct
             music.pewPew.play()
         }
     }
@@ -213,7 +213,7 @@ sprites.onOverlap(SpriteKind.Food, SpriteKind.LeftMarker, function (sprite, othe
         resetLevel()
     }
 })
-function displayLevel () {
+function displayLevel() {
     textSprite2 = textsprite.create("Level " + convertToText(levelCtr))
     textSprite2.setOutline(1, 6)
     textSprite2.setBorder(1, 6, 1)
@@ -223,7 +223,7 @@ function displayLevel () {
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Armor, function (sprite, otherSprite) {
     sprite.destroy()
 })
-function createMarkers (x: number, y: number, r: number) {
+function createMarkers(x: number, y: number, r: number) {
     mySprite7 = sprites.create(assets.image`Marker2`, SpriteKind.Marker)
     mySprite7.setPosition(120, 30)
     mySprite7 = sprites.create(assets.image`Marker3`, SpriteKind.Marker)
@@ -242,7 +242,7 @@ function createMarkers (x: number, y: number, r: number) {
     mySprite = sprites.create(assets.image`Cyclone10`, SpriteKind.LeftMarker)
     mySprite = sprites.create(assets.image`Cyclone11`, SpriteKind.RightMarker)
 }
-function resetVariables () {
+function resetVariables() {
     sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
     sprites.destroyAllSpritesOfKind(SpriteKind.CircleEnemy)
     sprites.destroyAllSpritesOfKind(SpriteKind.Player)
@@ -282,16 +282,16 @@ function resetVariables () {
     bBotRight = 0
     createMarkers(scene.screenWidth(), scene.screenHeight(), 2)
 }
-function resetLevel () {
+function resetLevel() {
     sprites.destroyAllSpritesOfKind(SpriteKind.Food)
     sprites.destroyAllSpritesOfKind(SpriteKind.HeroProjectile)
-    Lifectr += -1
+    lifeCtr += -1
     textSprite.destroy()
     textSprite2.destroy()
     displayLife()
     displayLevel()
     doExplosion()
-    if (Lifectr > 0) {
+    if (lifeCtr > 0) {
         game.splash("Replay Wave! Level: " + convertToText(levelCtr))
     } else {
         game.splash("Good game! Try again!")
@@ -301,7 +301,7 @@ function resetLevel () {
 }
 controller.B.onEvent(ControllerButtonEvent.Repeated, function () {
     if (!(bDisabled)) {
-        statusbar.value += statusBarPct / 8
+        statusbar.value += statusbarPct / 8
     }
 })
 statusbars.onZero(StatusBarKind.Health, function (status) {
@@ -321,7 +321,7 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
             mySprite2 = sprites.create(assets.image`laser1`, SpriteKind.HeroProjectile)
             mySprite2.setVelocity(laserV, 0)
             mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
-            statusbar.value += statusBarPct
+            statusbar.value += statusbarPct
             music.pewPew.play()
         }
     }
@@ -353,7 +353,7 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
             mySprite2 = sprites.create(assets.image`laser0`, SpriteKind.HeroProjectile)
             mySprite2.setVelocity(0, laserV)
             mySprite2.setFlag(SpriteFlag.AutoDestroy, true)
-            statusbar.value += statusBarPct
+            statusbar.value += statusbarPct
             music.pewPew.play()
         }
     }
@@ -362,10 +362,10 @@ controller.B.onEvent(ControllerButtonEvent.Released, function () {
     sprites.destroyAllSpritesOfKind(SpriteKind.Armor)
     bArmor = 0
 })
-function goNextLevel () {
+function goNextLevel() {
     killCtr = 0
     levelCtr += 1
-    Lifectr += 1
+    lifeCtr += 1
     textSprite.destroy()
     textSprite2.destroy()
     displayLife()
@@ -374,12 +374,13 @@ function goNextLevel () {
     createPct += createPct * 10
     pulsePct += pulsePct * 10
     gameTimer += -100
+    circlePct += 1
     if (levelCtr >= 5) {
         bCircle = 1
     }
     resetVariables()
 }
-function circleEnemy () {
+function circleEnemy() {
     newSprite = sprites.create(assets.image`circleEnemy`, SpriteKind.CircleEnemy)
     quad = randint(1, 4)
     if (quad == 1) {
@@ -398,8 +399,8 @@ function circleEnemy () {
     vy = 0
     newSprite.setFlag(SpriteFlag.AutoDestroy, true)
 }
-function displayLife () {
-    textSprite = textsprite.create("Lives " + convertToText(Lifectr))
+function displayLife() {
+    textSprite = textsprite.create("Lives " + convertToText(lifeCtr))
     textSprite.setOutline(1, 6)
     textSprite.setBorder(1, 6, 1)
     textSprite.setStayInScreen(true)
@@ -472,8 +473,7 @@ let mySprite3: Sprite = null
 let bDisabled = 0
 let mySprite: Sprite = null
 let bBotLeft = 0
-let statusBarPct = 0
-let bstatBar = 0
+let statusbarPct = 0
 let createPct = 0
 let pulsePct = 0
 let killCtr = 0
@@ -483,10 +483,10 @@ let projectile: Sprite = null
 let bCircle = 0
 let statusbar: StatusBarSprite = null
 let levelCtr = 0
-let Lifectr = 0
+let lifeCtr = 0
 game.splash("CYCLON", "Invasion!")
 info.setScore(0)
-Lifectr = 3
+lifeCtr = 3
 levelCtr = 1
 statusbar = statusbars.create(48, 4, StatusBarKind.Health)
 statusbar.max = 1280
@@ -501,43 +501,34 @@ let pulseV = 150
 killCtr = 0
 pulsePct = 1e-20
 createPct = 1e-20
+let circlePct = 5
 let gameTimer = 10000
-statusBarPct += -32
+statusbarPct += -32
 createMarkers(scene.screenWidth(), scene.screenHeight(), 2)
 game.onUpdateInterval(gameTimer, function () {
     if (bShot) {
-        timer.after(2000, function () {
-            bShot = 0
-        })
+        bShot = 0
     }
     if (bShot2) {
-        timer.after(2000, function () {
-            bShot2 = 0
-        })
+        bShot2 = 0
     }
     if (bShot3) {
-        timer.after(2000, function () {
-            bShot3 = 0
-        })
+        bShot3 = 0
     }
     if (bShot4) {
-        timer.after(2000, function () {
-            bShot4 = 0
-        })
+        bShot4 = 0
     }
     if (bShot5) {
-        timer.after(2000, function () {
-            bShot5 = 0
-        })
+        bShot5 = 0
     }
 })
 game.onUpdate(function () {
     if (killCtr >= levelCtr * 5) {
-        statusbar.setStatusBarFlag(StatusBarFlag.SmoothTransition, true) 
+        statusbar.setStatusBarFlag(StatusBarFlag.SmoothTransition, true)
         game.splash("Power Bonus: " + convertToText(statusbar.value))
         info.changeScoreBy(statusbar.value)
         game.splash("Score: " + convertToText(info.score()))
-        goNextLevel() 
+        goNextLevel()
     } else {
         if (bCircleCreated) {
             if (newSprite.y > scene.screenHeight() / 2) {
@@ -603,7 +594,7 @@ game.onUpdate(function () {
 })
 game.onUpdateInterval(500, function () {
     if (bCircle) {
-        if (Math.percentChance(5) && !(bCircleCreated)) {
+        if (Math.percentChance(circlePct) && !(bCircleCreated)) {
             circleEnemy()
             bCircleCreated = 1
         }
