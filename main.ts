@@ -262,7 +262,6 @@ function resetVariables () {
     sprites.destroyAllSpritesOfKind(SpriteKind.BotRightMarker)
     statusbar.value = 1280
     bDisabled = 0
-    //killCtr = 0
     bCreated = 0
     bCreated2 = 0
     bCreated3 = 0
@@ -293,7 +292,7 @@ function resetLevel () {
     displayLevel()
     doExplosion()
     if (Lifectr > 0) {
-        game.splash("Replay Wave! Level:", levelCtr)
+        game.splash("Replay Wave! Level: " + convertToText(levelCtr))
     } else {
         game.splash("Good game! Try again!")
         game.over(false)
@@ -371,7 +370,7 @@ function goNextLevel () {
     textSprite2.destroy()
     displayLife()
     displayLevel()
-    game.splash("Next Wave! Level:", levelCtr)
+    game.splash("Next Wave! Level: " + convertToText(levelCtr))
     createPct += createPct * 10
     pulsePct += pulsePct * 10
     gameTimer += -100
@@ -474,6 +473,7 @@ let bDisabled = 0
 let mySprite: Sprite = null
 let bBotLeft = 0
 let statusBarPct = 0
+let bstatBar = 0
 let createPct = 0
 let pulsePct = 0
 let killCtr = 0
@@ -533,7 +533,11 @@ game.onUpdateInterval(gameTimer, function () {
 })
 game.onUpdate(function () {
     if (killCtr >= levelCtr * 5) {
-        goNextLevel()
+        statusbar.setStatusBarFlag(StatusBarFlag.SmoothTransition, true) 
+        game.splash("Power Bonus: " + convertToText(statusbar.value))
+        info.changeScoreBy(statusbar.value)
+        game.splash("Score: " + convertToText(info.score()))
+        goNextLevel() 
     } else {
         if (bCircleCreated) {
             if (newSprite.y > scene.screenHeight() / 2) {
