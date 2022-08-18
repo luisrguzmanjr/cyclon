@@ -376,7 +376,6 @@ controller.B.onEvent(ControllerButtonEvent.Released, function () {
     bArmor = 0
 })
 function goNextLevel() {
-    killCtr = 0
     levelCtr += 1
     lifeCtr += 1
     textSprite.destroy()
@@ -549,7 +548,7 @@ game.onUpdateInterval(gameTimer, function () {
 })
 game.onUpdate(function () {
     if (killCtr >= levelCtr * 5) {
-        //statusbar.setStatusBarFlag(StatusBarFlag.SmoothTransition, true)
+        killCtr = 0
         goNextLevel()
     } else {
         if (bCircleCreated) {
