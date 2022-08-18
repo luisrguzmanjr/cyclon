@@ -509,6 +509,7 @@ let levelCtr = 0
 let lifeCtr = 0
 game.splash("CYCLON", "Invasion!")
 info.setScore(0)
+game.stats = true
 lifeCtr = 3
 levelCtr = 1
 statusbar = statusbars.create(48, 4, StatusBarKind.Health)
