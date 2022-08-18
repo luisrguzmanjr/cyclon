@@ -115,14 +115,14 @@ function doExplosion() {
             mySprite10 = sprites.create(assets.image`myImage0`, SpriteKind.Player)
             mySprite10.setVelocity(-50, -50)
         }
+        mySprite2.setVelocity(-50, -50)
     }
-    mySprite2.setVelocity(-50, -50)
     if (bTopHit) {
         mySprite3 = sprites.create(assets.image`Cyclone6`, SpriteKind.Player)
     } else {
         mySprite3 = sprites.create(assets.image`Cyclone8`, SpriteKind.TopMarker)
+        mySprite3.setVelocity(0, -50)
     }
-    mySprite3.setVelocity(0, -50)
     if (bTopRight) {
         mySprite4 = sprites.create(assets.image`CycloneCorner0`, SpriteKind.Player)
     } else {
@@ -131,20 +131,20 @@ function doExplosion() {
             mySprite11 = sprites.create(assets.image`myImage2`, SpriteKind.Player)
             mySprite11.setVelocity(50, -50)
         }
+        mySprite4.setVelocity(50, -50)
     }
-    mySprite4.setVelocity(50, -50)
     if (bLeftHit) {
         mySprite5 = sprites.create(assets.image`Cyclone4`, SpriteKind.Player)
     } else {
         mySprite5 = sprites.create(assets.image`Cyclone10`, SpriteKind.LeftMarker)
+        mySprite5.setVelocity(-50, 0)
     }
-    mySprite5.setVelocity(-50, 0)
     if (bRightHit) {
         mySprite6 = sprites.create(assets.image`Cyclone5`, SpriteKind.Player)
     } else {
         mySprite6 = sprites.create(assets.image`Cyclone11`, SpriteKind.RightMarker)
+        mySprite6.setVelocity(50, 0)
     }
-    mySprite6.setVelocity(50, 0)
     if (bBotLeft) {
         mySprite7 = sprites.create(assets.image`CycloneCorner1`, SpriteKind.Player)
     } else {
@@ -153,14 +153,14 @@ function doExplosion() {
             mySprite12 = sprites.create(assets.image`myImage1`, SpriteKind.Player)
             mySprite12.setVelocity(-50, 50)
         }
+        mySprite7.setVelocity(-50, 50)
     }
-    mySprite7.setVelocity(-50, 50)
     if (bBottomHit) {
         mySprite8 = sprites.create(assets.image`Cyclone7`, SpriteKind.Player)
     } else {
         mySprite8 = sprites.create(assets.image`Cyclone9`, SpriteKind.BotMarker)
+        mySprite8.setVelocity(0, 50)
     }
-    mySprite8.setVelocity(0, 50)
     if (bBotRight) {
         mySprite9 = sprites.create(assets.image`CycloneCorner2`, SpriteKind.Player)
     } else {
@@ -169,14 +169,15 @@ function doExplosion() {
             mySprite13 = sprites.create(assets.image`myImage`, SpriteKind.Player)
             mySprite13.setVelocity(50, 50)
         }
+        mySprite9.setVelocity(50, 50)
     }
-    mySprite9.setVelocity(50, 50)
-    pause(1000)
 }
 sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.HeroProjectile, function (sprite, otherSprite) {
     sprite.destroy()
     info.changeScoreBy(100)
     killCtr += 1
+    textSprite3.destroy()
+    displayCount()
     bCircleCreated = 0
     statusbar.value += 32
 })
@@ -213,6 +214,13 @@ sprites.onOverlap(SpriteKind.Food, SpriteKind.LeftMarker, function (sprite, othe
         resetLevel()
     }
 })
+function displayCount() {
+    textSprite3 = textsprite.create(convertToText(levelCtr * 5) + "/" + convertToText(killCtr))
+    textSprite3.setOutline(1, 6)
+    textSprite3.setBorder(1, 6, 1)
+    textSprite3.setStayInScreen(true)
+    textSprite3.setPosition(0, 112)
+}
 function displayLevel() {
     textSprite2 = textsprite.create("Level " + convertToText(levelCtr))
     textSprite2.setOutline(1, 6)
@@ -288,9 +296,14 @@ function resetLevel() {
     lifeCtr += -1
     textSprite.destroy()
     textSprite2.destroy()
+    textSprite3.destroy()
     displayLife()
     displayLevel()
-    doExplosion()
+    displayCount()
+    timer.background(function () {
+        doExplosion()
+    })
+    pause(2000)
     if (lifeCtr > 0) {
         game.splash("Replay Wave! Level: " + convertToText(levelCtr))
     } else {
@@ -368,9 +381,17 @@ function goNextLevel() {
     lifeCtr += 1
     textSprite.destroy()
     textSprite2.destroy()
+    textSprite3.destroy()
     displayLife()
     displayLevel()
-    game.splash("Next Wave! Level: " + convertToText(levelCtr))
+    displayCount()
+    let statusbarValue = statusbar.value
+    timer.background(function () {
+        game.splash("Power Bonus: " + convertToText(statusbarValue))
+        info.changeScoreBy(statusbarValue)
+        game.splash("Score: " + convertToText(info.score()))
+        game.splash("Next Wave! Level: " + convertToText(levelCtr))
+    })
     createPct += createPct * 10
     pulsePct += pulsePct * 10
     gameTimer += -100
@@ -416,6 +437,8 @@ sprites.onOverlap(SpriteKind.Enemy, SpriteKind.HeroProjectile, function (sprite,
     sprite.destroy()
     info.changeScoreBy(50)
     killCtr += 1
+    textSprite3.destroy()
+    displayCount()
     bCreated = 0
     bCreated2 = 0
     bCreated3 = 0
@@ -447,6 +470,7 @@ let bCreated3 = 0
 let bCreated2 = 0
 let bCreated = 0
 let textSprite2: TextSprite = null
+let textSprite3: TextSprite = null
 let bCircleCreated = 0
 let mySprite13: Sprite = null
 let mySprite9: Sprite = null
@@ -494,6 +518,7 @@ statusbar.value = 1280
 statusbar.setPosition(24, 18)
 displayLife()
 displayLevel()
+displayCount()
 bCircle = 0
 projectile = sprites.createProjectileFromSprite(assets.image`bomb`, newSprite, 0, 0)
 laserV = 300
@@ -524,10 +549,7 @@ game.onUpdateInterval(gameTimer, function () {
 })
 game.onUpdate(function () {
     if (killCtr >= levelCtr * 5) {
-        statusbar.setStatusBarFlag(StatusBarFlag.SmoothTransition, true)
-        game.splash("Power Bonus: " + convertToText(statusbar.value))
-        info.changeScoreBy(statusbar.value)
-        game.splash("Score: " + convertToText(info.score()))
+        //statusbar.setStatusBarFlag(StatusBarFlag.SmoothTransition, true)
         goNextLevel()
     } else {
         if (bCircleCreated) {
