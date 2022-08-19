@@ -1,4 +1,8 @@
 namespace SpriteKind {
+    export const Enemy1 = SpriteKind.create()
+    export const Enemy2 = SpriteKind.create()
+    export const Enemy3 = SpriteKind.create()
+    export const Enemy4 = SpriteKind.create()
     export const CircleEnemy = SpriteKind.create()
     export const HeroProjectile = SpriteKind.create()
     export const Armor = SpriteKind.create()
@@ -50,18 +54,19 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.TopRightMarker, function (sp
         }
     }
 })
-function circleSpriteAt2(sprite: Sprite, x: number, y: number, r: number, rx: number, ry: number, velocity: number) {
-    sprite.x = x - rx
-    sprite.y = y - ry
-    interval = 30
-    game.onUpdateInterval(interval, () => {
-        if (bCircleCreated) {
-            let time = game.runtime() / 20000
-            sprite.x = x + r * Math.cos(velocity * time);
-            sprite.y = y + r * Math.sin(velocity * time);
-        }
-    })
+function circleSpriteAt(sprite: Sprite, cx: number, cy: number, rx: number, ry: number) {
+    sprite.x = cx - rx
+    sprite.y = cy - ry
 }
+game.onUpdate(() => {
+    if (bCircleCreated) {
+        let time = game.runtime() / 20000
+        let velocity = 20
+        newSprite.x = screen.width / 2 + 35 * Math.cos(velocity * time);
+        newSprite.y = screen.height / 2 + 35 * Math.sin(velocity * time);
+    }
+})
+
 sprites.onOverlap(SpriteKind.Food, SpriteKind.RightMarker, function (sprite, otherSprite) {
     sprite.destroy()
     if (!(bRightHit)) {
@@ -261,7 +266,10 @@ function createMarkers(x: number, y: number, r: number) {
     mySprite = sprites.create(assets.image`Cyclone11`, SpriteKind.RightMarker)
 }
 function resetVariables() {
-    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy1)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy2)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy3)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy4)
     sprites.destroyAllSpritesOfKind(SpriteKind.CircleEnemy)
     sprites.destroyAllSpritesOfKind(SpriteKind.Player)
     sprites.destroyAllSpritesOfKind(SpriteKind.Food)
@@ -415,16 +423,16 @@ function circleEnemy() {
     newSprite = sprites.create(assets.image`circleEnemy`, SpriteKind.CircleEnemy)
     quad = randint(1, 4)
     if (quad == 1) {
-        circleSpriteAt2(newSprite, 80, 60, 35, 40, 0, 20)
+        circleSpriteAt(newSprite, 80, 60, 40, 0)
     }
     if (quad == 2) {
-        circleSpriteAt2(newSprite, 80, 60, 35, -40, 0, 20)
+        circleSpriteAt(newSprite, 80, 60, -40, 0)
     }
     if (quad == 3) {
-        circleSpriteAt2(newSprite, 80, 60, 35, 0, 30, 20)
+        circleSpriteAt(newSprite, 80, 60, 0, 30)
     }
     if (quad == 4) {
-        circleSpriteAt2(newSprite, 80, 60, 35, 0, -30, 20)
+        circleSpriteAt(newSprite, 80, 60, 0, -30)
     }
     vx = 0
     vy = 0
@@ -443,15 +451,39 @@ sprites.onOverlap(SpriteKind.HeroProjectile, SpriteKind.Food, function (sprite, 
     info.changeScoreBy(10)
     statusbar.value += 32
 })
-sprites.onOverlap(SpriteKind.Enemy, SpriteKind.HeroProjectile, function (sprite, otherSprite) {
+sprites.onOverlap(SpriteKind.Enemy1, SpriteKind.HeroProjectile, function (sprite, otherSprite) {
     sprite.destroy()
     info.changeScoreBy(50)
     killCtr += 1
     textSprite3.destroy()
     displayCount()
     bCreated = 0
+    statusbar.value += 32
+})
+sprites.onOverlap(SpriteKind.Enemy2, SpriteKind.HeroProjectile, function (sprite, otherSprite) {
+    sprite.destroy()
+    info.changeScoreBy(50)
+    killCtr += 1
+    textSprite3.destroy()
+    displayCount()
     bCreated2 = 0
+    statusbar.value += 32
+})
+sprites.onOverlap(SpriteKind.Enemy3, SpriteKind.HeroProjectile, function (sprite, otherSprite) {
+    sprite.destroy()
+    info.changeScoreBy(50)
+    killCtr += 1
+    textSprite3.destroy()
+    displayCount()
     bCreated3 = 0
+    statusbar.value += 32
+})
+sprites.onOverlap(SpriteKind.Enemy4, SpriteKind.HeroProjectile, function (sprite, otherSprite) {
+    sprite.destroy()
+    info.changeScoreBy(50)
+    killCtr += 1
+    textSprite3.destroy()
+    displayCount()
     bCreated4 = 0
     statusbar.value += 32
 })
@@ -501,7 +533,6 @@ let armorSprite: Sprite = null
 let bArmor = 0
 let bTopHit = 0
 let bRightHit = 0
-let interval = 0
 let bTopRight = 0
 let mySprite2: Sprite = null
 let mySprite3: Sprite = null
@@ -577,7 +608,7 @@ game.onUpdate(function () {
             }
         }
         if (Math.percentChance(createPct) && !(bCreated4)) {
-            mySprite6 = sprites.create(assets.image`Enemy2`, SpriteKind.Enemy)
+            mySprite6 = sprites.create(assets.image`Enemy2`, SpriteKind.Enemy4)
             mySprite6.setPosition(80, 88)
             bCreated4 = 1
         }
@@ -589,7 +620,7 @@ game.onUpdate(function () {
             bShot4 = 1
         }
         if (Math.percentChance(createPct) && !(bCreated3)) {
-            mySprite5 = sprites.create(assets.image`Enemy1`, SpriteKind.Enemy)
+            mySprite5 = sprites.create(assets.image`Enemy1`, SpriteKind.Enemy3)
             mySprite5.setPosition(128, 60)
             bCreated3 = 1
         }
@@ -601,7 +632,7 @@ game.onUpdate(function () {
             bShot3 = 1
         }
         if (Math.percentChance(createPct) && !(bCreated)) {
-            mySprite3 = sprites.create(assets.image`Enemy`, SpriteKind.Enemy)
+            mySprite3 = sprites.create(assets.image`Enemy`, SpriteKind.Enemy1)
             mySprite3.setPosition(32, 60)
             bCreated = 1
         }
@@ -613,7 +644,7 @@ game.onUpdate(function () {
             bShot = 1
         }
         if (Math.percentChance(createPct) && !(bCreated2)) {
-            mySprite4 = sprites.create(assets.image`Enemy0`, SpriteKind.Enemy)
+            mySprite4 = sprites.create(assets.image`Enemy0`, SpriteKind.Enemy2)
             mySprite4.setPosition(80, 32)
             bCreated2 = 1
         }
