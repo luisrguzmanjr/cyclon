@@ -590,6 +590,14 @@ game.onUpdateInterval(gameTimer, function () {
     }
 })
 game.onUpdate(function () {
+    if (bCircleCreated) {
+        time = game.runtime() / 20000
+        velocity = 20
+        newSprite.x = screen.width / 2 + 35 * Math.cos(velocity * time)
+        newSprite.y = screen.height / 2 + 35 * Math.sin(velocity * time)
+    }
+})
+game.onUpdate(function () {
     if (killCtr >= levelCtr * 5) {
         killCtr = 0
         goNextLevel()
@@ -654,14 +662,6 @@ game.onUpdate(function () {
             mySprite3.setFlag(SpriteFlag.AutoDestroy, true)
             bShot2 = 1
         }
-    }
-})
-game.onUpdate(function () {
-    if (bCircleCreated) {
-        time = game.runtime() / 20000
-        velocity = 20
-        newSprite.x = screen.width / 2 + 35 * Math.cos(velocity * time)
-        newSprite.y = screen.height / 2 + 35 * Math.sin(velocity * time)
     }
 })
 game.onUpdateInterval(500, function () {
