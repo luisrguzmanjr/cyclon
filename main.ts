@@ -338,7 +338,11 @@ function resetLevel() {
     resetVariables()
 }
 function displayCount() {
-    textSprite3 = textsprite.create("" + convertToText((levelCtr + 1) * 5) + "/" + convertToText(killCtr))
+    if (levelCtr == 0) {
+        textSprite3 = textsprite.create("10/" + convertToText(killCtr))
+    } else {
+        textSprite3 = textsprite.create("" + convertToText((levelCtr + 2) * 5) + "/" + convertToText(killCtr))
+    }
     textSprite3.setOutline(1, 6)
     textSprite3.setBorder(1, 6, 1)
     textSprite3.setStayInScreen(true)
@@ -603,7 +607,7 @@ game.onUpdate(function () {
     }
 })
 game.onUpdate(function () {
-    if ((levelCtr == 0 && killCtr == 10) || (levelCtr > 0 && killCtr == (levelCtr + 1) * 5) ) {
+    if (levelCtr == 0 && killCtr == 10 || levelCtr > 0 && killCtr == (levelCtr + 2) * 5) {
         killCtr = 0
         goNextLevel()
     } else {
