@@ -179,6 +179,7 @@ function doExplosion() {
 }
 sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.HeroProjectile, function (sprite, otherSprite) {
     sprite.destroy()
+    music.zapped.play()
     info.changeScoreBy(100)
     killCtr += 1
     textSprite3.destroy()
@@ -189,6 +190,7 @@ sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.HeroProjectile, function (s
 })
 sprites.onOverlap(SpriteKind.Enemy2, SpriteKind.HeroProjectile, function (sprite, otherSprite) {
     sprite.destroy()
+    music.zapped.play()
     info.changeScoreBy(50)
     killCtr += 1
     textSprite3.destroy()
@@ -211,6 +213,7 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 sprites.onOverlap(SpriteKind.Enemy3, SpriteKind.HeroProjectile, function (sprite, otherSprite) {
     sprite.destroy()
+    music.zapped.play()
     info.changeScoreBy(50)
     killCtr += 1
     textSprite3.destroy()
@@ -335,7 +338,7 @@ function resetLevel() {
     resetVariables()
 }
 function displayCount() {
-    textSprite3 = textsprite.create("" + convertToText(levelCtr * 5) + "/" + convertToText(killCtr))
+    textSprite3 = textsprite.create("" + convertToText((levelCtr + 1) * 5) + "/" + convertToText(killCtr))
     textSprite3.setOutline(1, 6)
     textSprite3.setBorder(1, 6, 1)
     textSprite3.setStayInScreen(true)
@@ -390,6 +393,7 @@ sprites.onOverlap(SpriteKind.CircleEnemy, SpriteKind.Marker, function (sprite, o
 })
 sprites.onOverlap(SpriteKind.Enemy4, SpriteKind.HeroProjectile, function (sprite, otherSprite) {
     sprite.destroy()
+    music.zapped.play()
     info.changeScoreBy(50)
     killCtr += 1
     textSprite3.destroy()
@@ -443,6 +447,7 @@ function goNextLevel() {
 }
 sprites.onOverlap(SpriteKind.Enemy1, SpriteKind.HeroProjectile, function (sprite, otherSprite) {
     sprite.destroy()
+    music.zapped.play()
     info.changeScoreBy(50)
     killCtr += 1
     textSprite3.destroy()
@@ -552,8 +557,8 @@ let lifeCtr = 0
 game.splash("CYCLON", "Invasion!")
 info.setScore(0)
 game.stats = true
-lifeCtr = 3
-levelCtr = 1
+lifeCtr = 2
+levelCtr = 0
 statusbar = statusbars.create(48, 4, StatusBarKind.Health)
 statusbar.max = 1280
 statusbar.value = 1280
@@ -598,7 +603,7 @@ game.onUpdate(function () {
     }
 })
 game.onUpdate(function () {
-    if (killCtr >= levelCtr * 5) {
+    if ((levelCtr == 0 && killCtr == 10) || (levelCtr > 0 && killCtr == (levelCtr + 1) * 5) ) {
         killCtr = 0
         goNextLevel()
     } else {
